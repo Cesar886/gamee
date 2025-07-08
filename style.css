@@ -1,0 +1,396 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.game-container {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+header h1 {
+    color: #4a5568;
+    margin-bottom: 5px;
+    font-size: 1.8em;
+}
+
+.subtitle {
+    color: #718096;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+}
+
+.pet-container {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.pet-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(180deg); }
+}
+
+.pet-sprite {
+    font-size: 4em;
+    margin-bottom: 10px;
+    animation: bounce 2s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+.pet-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #2d3748;
+    margin-bottom: 5px;
+    position: relative;
+    z-index: 1;
+}
+
+.pet-mood {
+    font-size: 2em;
+    position: relative;
+    z-index: 1;
+}
+
+.stats-container {
+    margin-bottom: 20px;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.stat-label {
+    font-weight: bold;
+    color: #4a5568;
+    min-width: 70px;
+    text-align: left;
+    font-size: 0.9em;
+}
+
+.stat-bar {
+    flex: 1;
+    height: 20px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.stat-fill {
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.5s ease, background-color 0.5s ease;
+    position: relative;
+}
+
+.stat-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+    animation: shine 2s ease-in-out infinite;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.stat-value {
+    font-weight: bold;
+    color: #4a5568;
+    min-width: 45px;
+    text-align: right;
+    font-size: 0.9em;
+}
+
+/* Colores para las barras de estadísticas */
+#hungerBar { background: linear-gradient(90deg, #ff6b6b, #ee5a24); }
+#happinessBar { background: linear-gradient(90deg, #feca57, #ff9ff3); }
+#healthBar { background: linear-gradient(90deg, #48dbfb, #0abde3); }
+#energyBar { background: linear-gradient(90deg, #1dd1a1, #10ac84); }
+
+.actions-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.action-btn {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+}
+
+.feed-btn {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: white;
+}
+
+.play-btn {
+    background: linear-gradient(135deg, #feca57, #ff9ff3);
+    color: white;
+}
+
+.heal-btn {
+    background: linear-gradient(135deg, #48dbfb, #0abde3);
+    color: white;
+}
+
+.sleep-btn {
+    background: linear-gradient(135deg, #a55eea, #8854d0);
+    color: white;
+}
+
+.status-message {
+    background: #f7fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #4a5568;
+    font-weight: bold;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-info {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    color: #6c757d;
+    font-size: 0.9em;
+}
+
+.game-info p {
+    margin-bottom: 5px;
+}
+
+.reset-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8em;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+.reset-btn:hover {
+    background: #c82333;
+}
+
+/* Estados especiales de la mascota */
+.pet-sleeping {
+    filter: brightness(0.7);
+}
+
+.pet-sick {
+    animation: shake 0.5s ease-in-out infinite;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.pet-happy {
+    animation: bounce 1s ease-in-out infinite;
+}
+
+.pet-sad {
+    filter: grayscale(50%);
+    animation: none;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .game-container {
+        padding: 15px;
+        margin: 5px;
+    }
+    
+    .pet-sprite {
+        font-size: 3em;
+    }
+    
+    .actions-container {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .action-btn {
+        padding: 15px;
+        font-size: 1em;
+    }
+}
+
+
+
+.pet-image {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    transition: transform 0.3s ease-in-out;
+}
+
+.pet-image.happy-animation {
+    animation: bounce 0.5s ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.game-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s linear;
+}
+
+.game-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.platform-game-container {
+    background-color: #87CEEB; /* Sky blue */
+    border: 5px solid #556B2F; /* Dark Olive Green */
+    border-radius: 10px;
+    width: 300px;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Press Start 2P', cursive;
+    color: #fff;
+    text-align: center;
+}
+
+.platform-game-container canvas {
+    display: block;
+    background-color: #87CEEB;
+}
+
+.game-score {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+    z-index: 10;
+    color: #fff;
+    text-shadow: 2px 2px #000;
+}
+
+.game-start-screen, .game-over-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+}
+
+.game-start-screen h2, .game-over-screen h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.game-start-screen button, .game-over-screen button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.game-over-screen p {
+    font-size: 20px;
+    margin-top: 10px;
+}
+

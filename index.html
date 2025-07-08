@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Un juego de mascota virtual tipo Tamagotchi para cuidar de tu pequeña criaturita">
+    <meta name="theme-color" content="#764ba2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Mascota Virtual">
+    
+    <title>Mi Capibara Virtual 🦫</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNCIgZmlsbD0idXJsKCNncmFkaWVudDBfbGluZWFyXzFfMSkiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQwX2xpbmVhcl8xXzEiIHgxPSIwIiB5MT0iMCIgeDI9IjMyIiB5Mj0iMzIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzY2N2VlYSIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NjRiYTIiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8dGV4dCB4PSIxNiIgeT0iMjIiIGZvbnQtc2l6ZT0iMTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfjbE8L3RleHQ+Cjwvc3ZnPgo=" type="image/svg+xml">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>🦫 Mi Capibara Virtual</h1>
+            <p class="subtitle">¡Cuida de tu adorable capibara!</p>
+        </header>
+
+        <div class="pet-container">
+            <div class="pet-display">
+                <img id="petSprite" src="capibara_normal.png" alt="Capibara" class="pet-image">
+                <div class="pet-name" id="petName">Capibara</div>
+                <div class="pet-mood" id="petMood">😊</div>
+            </div>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat">
+                <span class="stat-label">Hambre:</span>
+                <div class="stat-bar">
+                    <div class="stat-fill" id="hungerBar"></div>
+                </div>
+                <span class="stat-value" id="hungerValue">100%</span>
+            </div>
+            
+            <div class="stat">
+                <span class="stat-label">Felicidad:</span>
+                <div class="stat-bar">
+                    <div class="stat-fill" id="happinessBar"></div>
+                </div>
+                <span class="stat-value" id="happinessValue">100%</span>
+            </div>
+            
+            <div class="stat">
+                <span class="stat-label">Salud:</span>
+                <div class="stat-bar">
+                    <div class="stat-fill" id="healthBar"></div>
+                </div>
+                <span class="stat-value" id="healthValue">100%</span>
+            </div>
+            
+            <div class="stat">
+                <span class="stat-label">Energía:</span>
+                <div class="stat-bar">
+                    <div class="stat-fill" id="energyBar"></div>
+                </div>
+                <span class="stat-value" id="energyValue">100%</span>
+            </div>
+        </div>
+
+        <div class="actions-container">
+            <button class="action-btn feed-btn" onclick="feedPet()">
+                🍎 Alimentar
+            </button>
+            <button class="action-btn play-btn" onclick="playWithPet()">
+                🎾 Jugar
+            </button>
+            <button class="action-btn heal-btn" onclick="healPet()">
+                💊 Curar
+            </button>
+            <button class="action-btn sleep-btn" onclick="putToSleep()">
+                😴 Dormir
+            </button>
+        </div>
+
+        <div class="status-message" id="statusMessage">
+            ¡Tu mascota está feliz y saludable!
+        </div>
+
+        <div class="game-info">
+            <p>Edad: <span id="petAge">0</span> días</p>
+            <p>Última vez alimentada: <span id="lastFed">Nunca</span></p>
+            <button class="reset-btn" onclick="resetPet()">🔄 Reiniciar Mascota</button>
+        </div>
+    </div>
+
+    <div class="game-overlay" id="platformGameOverlay">
+        <div class="platform-game-container">
+            <div class="game-score" id="gameScore">0</div>
+            <canvas id="gameCanvas" width="300" height="500"></canvas>
+            <div class="game-start-screen" id="gameStartScreen">
+                <h2>¡Salto de Capibara!</h2>
+                <button onclick="startGame()">Empezar</button>
+            </div>
+            <div class="game-over-screen" id="gameOverScreen" style="display:none;">
+                <h2>¡Juego Terminado!</h2>
+                <p>Puntuación: <span id="finalScore">0</span></p>
+                <button onclick="restartGame()">Volver a Jugar</button>
+                <button onclick="closeGame()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    
+    <!-- Registrar Service Worker para funcionamiento offline -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(function(registration) {
+                        console.log('Service Worker registrado exitosamente:', registration.scope);
+                    })
+                    .catch(function(error) {
+                        console.log('Error al registrar Service Worker:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
