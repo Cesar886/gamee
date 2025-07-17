@@ -620,6 +620,8 @@ header h1 {
 /* Tienda */
 .shop-content {
     max-width: 400px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .shop-tabs {
@@ -628,19 +630,29 @@ header h1 {
     background: #f7fafc;
     border-radius: 10px;
     padding: 5px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.shop-tabs::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
 }
 
 .shop-tab {
-    flex: 1;
-    padding: 8px;
+    flex: 0 0 auto;
+    padding: 8px 12px;
     border: none;
     background: transparent;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 0.9em;
+    font-size: 0.8em;
     font-weight: bold;
     color: #718096;
     transition: all 0.3s ease;
+    white-space: nowrap;
+    min-width: fit-content;
 }
 
 .shop-tab.active {
@@ -655,6 +667,9 @@ header h1 {
     margin-bottom: 20px;
     max-height: 300px;
     overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 5px;
+    box-sizing: border-box;
 }
 
 .shop-item {
@@ -664,6 +679,15 @@ header h1 {
     text-align: center;
     transition: all 0.3s ease;
     cursor: pointer;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 .shop-item:hover {
@@ -688,23 +712,38 @@ header h1 {
 .shop-item-icon {
     font-size: 2em;
     margin-bottom: 5px;
+    line-height: 1;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols", sans-serif;
+    display: block;
+    width: 100%;
+    text-align: center;
 }
 
 .shop-item-name {
     font-weight: bold;
     margin-bottom: 5px;
     color: #4a5568;
+    font-size: 0.85em;
+    line-height: 1.2;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 .shop-item-price {
     color: #8b4513;
     font-weight: bold;
+    font-size: 0.9em;
+    margin-bottom: 3px;
 }
 
 .shop-item-effect {
-    font-size: 0.8em;
+    font-size: 0.7em;
     color: #718096;
     margin-top: 5px;
+    line-height: 1.1;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .close-shop-btn {
@@ -887,4 +926,3 @@ header h1 {
     40% { transform: translateY(-10px); }
     60% { transform: translateY(-5px); }
 }
-

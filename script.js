@@ -1,3 +1,4 @@
+
 // Estado inicial mejorado de la mascota
 const defaultPetState = {
     name: "Capibara",
@@ -233,7 +234,7 @@ const shopItems = {
         { id: "shampoo", name: "Champú", icon: "🧴", price: 25, effect: "cleanliness", value: 60, description: "+60 Limpieza", type: "food" },
         { id: "bandage", name: "Venda", icon: "🩹", price: 10, effect: "health", value: 15, description: "+15 Salud", type: "food" },
         { id: "pain_reliever", name: "Analgésico", icon: "💊", price: 20, effect: "health", value: 25, description: "+25 Salud", type: "food" },
-        { id: "antiseptic", name: "Antiséptico", icon: " antiseptic", price: 15, effect: "cleanliness", value: 30, description: "+30 Limpieza", type: "food" },
+        { id: "antiseptic", name: "Antiséptico", icon: "🧴", price: 15, effect: "cleanliness", value: 30, description: "+30 Limpieza", type: "food" },
         { id: "toothbrush", name: "Cepillo de Dientes", icon: "🦷", price: 10, effect: "cleanliness", value: 20, description: "+20 Limpieza", type: "food" },
         { id: "mouthwash", name: "Enjuague Bucal", icon: "💧", price: 12, effect: "cleanliness", value: 25, description: "+25 Limpieza", type: "food" },
         { id: "sleep_aid", name: "Ayuda para Dormir", icon: "😴", price: 20, effect: "energy", value: 35, description: "+35 Energía (sueño)", type: "food" },
@@ -287,13 +288,13 @@ const shopItems = {
         { id: "cape", name: "Capa", icon: "🦸", price: 75, type: "accessory", description: "Capa de superhéroe" },
         { id: "vest", name: "Chaleco", icon: "🦺", price: 50, type: "accessory", description: "Chaleco elegante" },
         { id: "bowtie", name: "Pajarita", icon: "🤵", price: 30, type: "accessory", description: "Pajarita chic" },
-        { id: "apron", name: "Delantal", icon: " apron", price: 25, type: "accessory", description: "Delantal de cocina" },
+        { id: "apron", name: "Delantal", icon: "👨‍🍳", price: 25, type: "accessory", description: "Delantal de cocina" },
         { id: "gloves", name: "Guantes", icon: "🧤", price: 20, type: "accessory", description: "Guantes suaves" },
         { id: "sash", name: "Faja", icon: "🎗️", price: 30, type: "accessory", description: "Faja ceremonial" },
         { id: "skirt", name: "Falda", icon: "👗", price: 40, type: "accessory", description: "Falda coqueta" },
         { id: "shorts", name: "Pantalones Cortos", icon: "🩳", price: 35, type: "accessory", description: "Shorts cómodos" },
         { id: "socks", name: "Calcetines", icon: "🧦", price: 15, type: "accessory", description: "Calcetines divertidos" },
-        { id: "slippers", name: "Pantuflas", icon: " slippers", price: 25, type: "accessory", description: "Pantuflas suaves" },
+        { id: "slippers", name: "Pantuflas", icon: "🥿", price: 25, type: "accessory", description: "Pantuflas suaves" },
         { id: "umbrella", name: "Paraguas", icon: "☂️", price: 30, type: "accessory", description: "Paraguas de lluvia" },
         { id: "fan", name: "Abanico", icon: "🪭", price: 20, type: "accessory", description: "Abanico de mano" },
         { id: "mask", name: "Máscara", icon: "🎭", price: 40, type: "accessory", description: "Máscara misteriosa" },
@@ -317,7 +318,7 @@ const shopItems = {
         { id: "palm_tree", name: "Palmera", icon: "🌴", price: 90, type: "decoration", description: "Palmera tropical" },
         { id: "bamboo", name: "Bambú", icon: "🎍", price: 55, type: "decoration", description: "Bambú de la suerte" },
         { id: "lily", name: "Lirio", icon: "🌼", price: 40, type: "decoration", description: "Lirio elegante" },
-        { id: "daisy", name: "Margarita", icon: " daisy", price: 25, type: "decoration", description: "Margarita alegre" },
+        { id: "daisy", name: "Margarita", icon: "🌼", price: 25, type: "decoration", description: "Margarita alegre" },
 
         // Muebles
         { id: "sofa", name: "Sofá", icon: "🛋️", price: 120, type: "decoration", description: "Sofá cómodo" },
@@ -326,15 +327,15 @@ const shopItems = {
         { id: "bed", name: "Cama", icon: "🛏️", price: 150, type: "decoration", description: "Cama cómoda" },
         { id: "bookshelf", name: "Estantería", icon: "📚", price: 100, type: "decoration", description: "Estantería llena" },
         { id: "desk", name: "Escritorio", icon: "🗃️", price: 90, type: "decoration", description: "Escritorio moderno" },
-        { id: "wardrobe", name: "Armario", icon: " closet", price: 130, type: "decoration", description: "Armario espacioso" },
-        { id: "dresser", name: "Cómoda", icon: " dresser", price: 95, type: "decoration", description: "Cómoda con cajones" },
-        { id: "nightstand", name: "Mesita de Noche", icon: " bedside table", price: 50, type: "decoration", description: "Mesita práctica" },
+        { id: "wardrobe", name: "Armario", icon: "🚪", price: 130, type: "decoration", description: "Armario espacioso" },
+        { id: "dresser", name: "Cómoda", icon: "🗄️", price: 95, type: "decoration", description: "Cómoda con cajones" },
+        { id: "nightstand", name: "Mesita de Noche", icon: "🛏️", price: 50, type: "decoration", description: "Mesita práctica" },
         { id: "dining_table", name: "Mesa de Comedor", icon: "🍽️", price: 180, type: "decoration", description: "Mesa para cenas" },
         { id: "coffee_table", name: "Mesa de Centro", icon: "☕", price: 70, type: "decoration", description: "Mesa de salón" },
         { id: "armchair", name: "Sillón", icon: "🛋️", price: 110, type: "decoration", description: "Sillón individual" },
-        { id: "ottoman", name: "Otomana", icon: " ottoman", price: 45, type: "decoration", description: "Otomana cómoda" },
-        { id: "bench", name: "Banco", icon: " bench", price: 65, type: "decoration", description: "Banco de jardín" },
-        { id: "rocking_chair", name: "Mecedora", icon: " rocking chair", price: 85, type: "decoration", description: "Mecedora relajante" },
+        { id: "ottoman", name: "Otomana", icon: "🪑", price: 45, type: "decoration", description: "Otomana cómoda" },
+        { id: "bench", name: "Banco", icon: "🪑", price: 65, type: "decoration", description: "Banco de jardín" },
+        { id: "rocking_chair", name: "Mecedora", icon: "🪑", price: 85, type: "decoration", description: "Mecedora relajante" },
 
         // Electrónicos
         { id: "tv", name: "Televisión", icon: "📺", price: 200, type: "decoration", description: "TV moderna" },
@@ -371,10 +372,10 @@ const shopItems = {
         { id: "fountain", name: "Fuente", icon: "⛲", price: 350, type: "decoration", description: "Fuente decorativa" },
         { id: "globe", name: "Globo Terráqueo", icon: "🌍", price: 80, type: "decoration", description: "Globo educativo" },
         { id: "vase", name: "Jarrón", icon: "🏺", price: 35, type: "decoration", description: "Jarrón de flores" },
-        { id: "curtains", name: "Cortinas", icon: " curtains", price: 50, type: "decoration", description: "Cortinas elegantes" },
+        { id: "curtains", name: "Cortinas", icon: "🪟", price: 50, type: "decoration", description: "Cortinas elegantes" },
         { id: "fireplace", name: "Chimenea", icon: "🔥", price: 250, type: "decoration", description: "Chimenea acogedora" },
-        { id: "rug", name: "Tapete", icon: " rug", price: 40, type: "decoration", description: "Tapete suave" },
-        { id: "cushion", name: "Cojín", icon: " cushion", price: 20, type: "decoration", description: "Cojín decorativo" },
+        { id: "rug", name: "Tapete", icon: "🧽", price: 40, type: "decoration", description: "Tapete suave" },
+        { id: "cushion", name: "Cojín", icon: "🛏️", price: 20, type: "decoration", description: "Cojín decorativo" },
         { id: "books", name: "Libros", icon: "📚", price: 30, type: "decoration", description: "Pila de libros" },
         { id: "trophy", name: "Trofeo", icon: "🏆", price: 100, type: "decoration", description: "Trofeo de campeón" },
         { id: "crystal_ball", name: "Bola de Cristal", icon: "🔮", price: 150, type: "decoration", description: "Bola mágica" },
@@ -416,8 +417,8 @@ const shopItems = {
         { id: "monopoly", name: "Monopoly", icon: "💰", price: 70, type: "toy", description: "Juego de bienes raíces" },
         { id: "scrabble", name: "Scrabble", icon: "🔠", price: 55, type: "toy", description: "Juego de palabras" },
         { id: "jenga", name: "Jenga", icon: "🧱", price: 30, type: "toy", description: "Juego de equilibrio" },
-        { id: "dominoes", name: "Dominó", icon: " dominoes", price: 20, type: "toy", description: "Juego de fichas" },
-        { id: "backgammon", name: "Backgammon", icon: " backgammon", price: 45, type: "toy", description: "Juego de estrategia" },
+        { id: "dominoes", name: "Dominó", icon: "🀫", price: 20, type: "toy", description: "Juego de fichas" },
+        { id: "backgammon", name: "Backgammon", icon: "🎲", price: 45, type: "toy", description: "Juego de estrategia" },
 
         // Juguetes activos
         { id: "yo_yo", name: "Yo-yo", icon: "🪀", price: 22, type: "toy", description: "Yo-yo clásico" },
@@ -428,7 +429,7 @@ const shopItems = {
         { id: "skateboard", name: "Patineta", icon: "🛹", price: 60, type: "toy", description: "Patineta de calle" },
         { id: "roller_skates", name: "Patines", icon: "⛸️", price: 55, type: "toy", description: "Patines de ruedas" },
         { id: "scooter", name: "Patinete", icon: "🛴", price: 45, type: "toy", description: "Patinete divertido" },
-        { id: "boomerang", name: "Boomerang", icon: " boomerang", price: 35, type: "toy", description: "Boomerang de caza" },
+        { id: "boomerang", name: "Boomerang", icon: "🪃", price: 35, type: "toy", description: "Boomerang de caza" },
         { id: "darts", name: "Dardos", icon: "🎯", price: 25, type: "toy", description: "Juego de dardos" },
 
         // Juguetes creativos
@@ -437,10 +438,10 @@ const shopItems = {
         { id: "clay", name: "Plastilina", icon: "🎨", price: 30, type: "toy", description: "Plastilina colorida" },
         { id: "crayons", name: "Crayones", icon: "🖍️", price: 25, type: "toy", description: "Crayones de colores" },
         { id: "paint_set", name: "Set de Pintura", icon: "🎨", price: 50, type: "toy", description: "Set de artista" },
-        { id: "easel", name: "Caballete", icon: " easel", price: 65, type: "toy", description: "Caballete de pintura" },
-        { id: "play_doh", name: "Play-Doh", icon: " play-doh", price: 20, type: "toy", description: "Masa para moldear" },
-        { id: "slime", name: "Slime", icon: " slime", price: 15, type: "toy", description: "Slime pegajoso" },
-        { id: "origami", name: "Origami", icon: " origami", price: 18, type: "toy", description: "Papel para origami" },
+        { id: "easel", name: "Caballete", icon: "🎨", price: 65, type: "toy", description: "Caballete de pintura" },
+        { id: "play_doh", name: "Play-Doh", icon: "🧱", price: 20, type: "toy", description: "Masa para moldear" },
+        { id: "slime", name: "Slime", icon: "🟢", price: 15, type: "toy", description: "Slime pegajoso" },
+        { id: "origami", name: "Origami", icon: "📄", price: 18, type: "toy", description: "Papel para origami" },
         { id: "sewing_kit", name: "Kit de Costura", icon: "🧵", price: 35, type: "toy", description: "Kit de costura" },
 
         // Juguetes electrónicos
@@ -452,7 +453,7 @@ const shopItems = {
         { id: "toy_camera", name: "Cámara de Juguete", icon: "📷", price: 40, type: "toy", description: "Cámara para niños" },
         { id: "toy_phone", name: "Teléfono de Juguete", icon: "📱", price: 30, type: "toy", description: "Teléfono para jugar" },
         { id: "toy_laptop", name: "Laptop de Juguete", icon: "💻", price: 50, type: "toy", description: "Laptop para niños" },
-        { id: "toy_tablet", name: "Tablet de Juguete", icon: " tablet", price: 45, type: "toy", description: "Tablet para jugar" },
+        { id: "toy_tablet", name: "Tablet de Juguete", icon: "📱", price: 45, type: "toy", description: "Tablet para jugar" },
         { id: "toy_robot_dog", name: "Perro Robot", icon: "🐶🤖", price: 100, type: "toy", description: "Perro robot interactivo" }
     ],
     special: [
@@ -468,7 +469,7 @@ const shopItems = {
         { id: "mega_boost", name: "Mega Impulso", icon: "🚀⭐", price: 400, effect: "all", value: 50, description: "+50 a todas las estadísticas" },
         { id: "xp_boost", name: "Poción de XP", icon: "✨📈", price: 100, effect: "special", value: 0, description: "Duplica XP por 30 min" },
         { id: "coin_magnet", name: "Imán de Monedas", icon: "🧲💰", price: 150, effect: "special", value: 0, description: "Atrae monedas en minijuegos" },
-        { id: "pet_resurrection", name: "Elixir de Resurrección", icon: " resurrect", price: 1000, effect: "special", value: 0, description: "Revive a tu mascota" },
+        { id: "pet_resurrection", name: "Elixir de Resurrección", icon: "⚰️✨", price: 1000, effect: "special", value: 0, description: "Revive a tu mascota" },
         { id: "golden_ticket", name: "Boleto Dorado", icon: "🎫✨", price: 750, effect: "special", value: 0, description: "Acceso a evento especial" },
         { id: "mystery_box", name: "Caja Misteriosa", icon: "🎁❓", price: 200, effect: "special", value: 0, description: "Contiene un item aleatorio" },
         { id: "infinite_food", name: "Comida Infinita", icon: "♾️🍎", price: 1500, effect: "special", value: 0, description: "Hambre nunca baja por 24h" },
@@ -478,7 +479,6 @@ const shopItems = {
         { id: "master_key", name: "Llave Maestra", icon: "🔑", price: 1000, effect: "special", value: 0, description: "Desbloquea todas las habitaciones" }
     ]
 };
-
 
 // Inicializar el juego
 function initGame() {
