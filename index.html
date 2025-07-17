@@ -2,208 +2,354 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="description" content="Un juego de mascota virtual tipo Tamagotchi para cuidar de tu pequeña criaturita">
-    <meta name="theme-color" content="#764ba2">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Mascota Virtual">
-    
-    <title>Mi Capibara Virtual</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capibara Virtual - Mascota Digital</title>
+    <link rel="stylesheet" href="style.css?v=4.0">
     <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="Cuida de tu capibara virtual en esta adorable mascota digital">
     
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNCIgZmlsbD0idXJsKCNncmFkaWVudDBfbGluZWFyXzFfMSkiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQwX2xpbmVhcjFfMSIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NGJhMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+8J+NsTwvdGV4dD4KPC9zdmc+Cg==" type="image/svg+xml">
+    <!-- Lottie Web Library -->
+    <script src="https://unpkg.com/lottie-web@5.7.4/build/player/lottie.min.js"></script>
+    
+    <!-- PWA Icons -->
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512x512.png">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="capibara_normal.png" as="image">
+    <link rel="preload" href="capibara_feliz.png" as="image">
+    <link rel="preload" href="capibara_saltando.png" as="image">
 </head>
 <body>
     <div class="game-container">
-        <!-- Header con monedas y configuración -->
+        <!-- Lottie Animation Container -->
+        <div id="capyAnimation"></div>
+        
+        <!-- Header -->
         <header>
             <div class="header-top">
                 <div class="coins-display">
                     <span class="coin-icon">🪙</span>
-                    <span id="coinCount">0</span>
+                    <span id="coinCount">100</span>
                 </div>
-                <h1>Mi Capibara</h1>
-                <button class="settings-btn" onclick="openSettings()">⚙️</button>
+                <button class="settings-btn" onclick="openSettings()" aria-label="Configuración">
+                    ⚙️
+                </button>
             </div>
-            <p class="subtitle">¡Cuida de tu adorable capibara!</p>
+            <h1>🦫 Capibara Virtual</h1>
+            <p class="subtitle">Tu mascota digital favorita</p>
         </header>
 
         <!-- Navegación de habitaciones -->
-        <div class="room-navigation">
+        <nav class="room-navigation">
             <button class="room-btn active" data-room="living" onclick="changeRoom('living')">
-                🏠 Sala
+                🏠<br>Sala
             </button>
             <button class="room-btn" data-room="kitchen" onclick="changeRoom('kitchen')">
-                🍽️ Cocina
+                🍽️<br>Cocina
             </button>
             <button class="room-btn" data-room="bedroom" onclick="changeRoom('bedroom')">
-                🛏️ Dormitorio
+                🛏️<br>Cuarto
             </button>
             <button class="room-btn" data-room="game" onclick="changeRoom('game')">
-                🎮 Juegos
+                🎮<br>Juegos
             </button>
             <button class="room-btn" data-room="shop" onclick="changeRoom('shop')">
-                🛒 Tienda
+                🛒<br>Tienda
             </button>
-        </div>
+        </nav>
 
-        <!-- Contenedor principal de la mascota -->
-        <div class="pet-container" id="petContainer">
+        <!-- Contenedor de la mascota -->
+        <div id="petContainer" class="pet-container living">
             <div class="pet-display">
-                <img id="petSprite" src="capibara_normal.png" alt="Capibara" class="pet-image">
                 <div class="pet-accessories" id="petAccessories"></div>
-                <div class="pet-name" id="petName">Capibara</div>
-                <div class="pet-mood" id="petMood">😊</div>
+                <img id="petSprite" class="pet-image" src="capibara_normal.png" alt="Capibara Virtual">
+                <h2 id="petName" class="pet-name">Capibara</h2>
+                <div id="petMood" class="pet-mood">😊</div>
             </div>
         </div>
 
         <!-- Estadísticas -->
         <div class="stats-container">
             <div class="stat">
-                <span class="stat-label">Hambre:</span>
+                <span class="stat-label">🍎 Hambre:</span>
                 <div class="stat-bar">
-                    <div class="stat-fill" id="hungerBar"></div>
+                    <div id="hungerBar" class="stat-fill" style="width: 100%"></div>
                 </div>
-                <span class="stat-value" id="hungerValue">100%</span>
+                <span id="hungerValue" class="stat-value">100%</span>
             </div>
-            
             <div class="stat">
-                <span class="stat-label">Felicidad:</span>
+                <span class="stat-label">😊 Felicidad:</span>
                 <div class="stat-bar">
-                    <div class="stat-fill" id="happinessBar"></div>
+                    <div id="happinessBar" class="stat-fill" style="width: 100%"></div>
                 </div>
-                <span class="stat-value" id="happinessValue">100%</span>
+                <span id="happinessValue" class="stat-value">100%</span>
             </div>
-            
             <div class="stat">
-                <span class="stat-label">Salud:</span>
+                <span class="stat-label">❤️ Salud:</span>
                 <div class="stat-bar">
-                    <div class="stat-fill" id="healthBar"></div>
+                    <div id="healthBar" class="stat-fill" style="width: 100%"></div>
                 </div>
-                <span class="stat-value" id="healthValue">100%</span>
+                <span id="healthValue" class="stat-value">100%</span>
             </div>
-            
             <div class="stat">
-                <span class="stat-label">Energía:</span>
+                <span class="stat-label">⚡ Energía:</span>
                 <div class="stat-bar">
-                    <div class="stat-fill" id="energyBar"></div>
+                    <div id="energyBar" class="stat-fill" style="width: 100%"></div>
                 </div>
-                <span class="stat-value" id="energyValue">100%</span>
+                <span id="energyValue" class="stat-value">100%</span>
             </div>
-
             <div class="stat">
-                <span class="stat-label">Limpieza:</span>
+                <span class="stat-label">🧼 Limpieza:</span>
                 <div class="stat-bar">
-                    <div class="stat-fill" id="cleanlinessBar"></div>
+                    <div id="cleanlinessBar" class="stat-fill" style="width: 100%"></div>
                 </div>
-                <span class="stat-value" id="cleanlinessValue">100%</span>
+                <span id="cleanlinessValue" class="stat-value">100%</span>
             </div>
         </div>
 
-        <!-- Contenedor de acciones dinámico -->
-        <div class="actions-container" id="actionsContainer">
-            <!-- Las acciones cambiarán según la habitación -->
+        <!-- Acciones dinámicas -->
+        <div id="actionsContainer" class="actions-container">
+            <!-- Las acciones se generan dinámicamente según la habitación -->
         </div>
 
         <!-- Mensaje de estado -->
-        <div class="status-message" id="statusMessage">
-            ¡Tu mascota está feliz y saludable!
+        <div id="statusMessage" class="status-message">
+            😊 ¡Tu mascota está feliz y saludable!
         </div>
 
         <!-- Información del juego -->
         <div class="game-info">
-            <p>Edad: <span id="petAge">0</span> días | Nivel: <span id="petLevel">1</span></p>
-            <p>Última vez alimentada: <span id="lastFed">Nunca</span></p>
             <div class="level-progress">
                 <div class="level-bar">
-                    <div class="level-fill" id="levelBar"></div>
+                    <div id="levelBar" class="level-fill" style="width: 0%"></div>
                 </div>
-                <span class="level-text">EXP: <span id="expPoints">0</span>/100</span>
+                <div class="level-text">
+                    Nivel <span id="petLevel">1</span> - EXP: <span id="expPoints">0</span>
+                </div>
             </div>
+            <p>Edad: <span id="petAge">0</span> días</p>
+            <p>Última vez alimentada: <span id="lastFed">Nunca</span></p>
             <button class="reset-btn" onclick="resetPet()">🔄 Reiniciar Mascota</button>
         </div>
     </div>
 
-    <!-- Overlay del juego de plataformas -->
-    <div class="game-overlay" id="platformGameOverlay">
-        <div class="platform-game-container">
-            <div class="game-score" id="gameScore">0</div>
-            <canvas id="gameCanvas" width="300" height="500"></canvas>
-            <div class="game-start-screen" id="gameStartScreen">
-                <h2>¡Salto de Capibara!</h2>
-                <p>Usa las flechas o toca la pantalla para moverte</p>
-                <button onclick="startGame()">Empezar</button>
-            </div>
-            <div class="game-over-screen" id="gameOverScreen" style="display:none;">
-                <h2>¡Juego Terminado!</h2>
-                <p>Puntuación: <span id="finalScore">0</span></p>
-                <p>Monedas ganadas: <span id="coinsEarned">0</span></p>
-                <button onclick="restartGame()">Volver a Jugar</button>
-                <button onclick="closeGame()">Cerrar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de configuración -->
-    <div class="modal-overlay" id="settingsModal">
+    <!-- Modal de Configuración -->
+    <div id="settingsModal" class="modal-overlay">
         <div class="modal-content">
-            <h3>Configuración</h3>
+            <h3>⚙️ Configuración</h3>
             <div class="setting-item">
                 <label for="petNameInput">Nombre de la mascota:</label>
-                <input type="text" id="petNameInput" maxlength="15">
+                <input type="text" id="petNameInput" maxlength="15" placeholder="Nombre de tu capibara">
             </div>
             <div class="setting-item">
-                <label>Color del capibara:</label>
+                <label>Color de la mascota:</label>
                 <div class="color-options">
-                    <button class="color-btn" data-color="normal" onclick="changePetColor('normal')">🟤 Normal</button>
+                    <button class="color-btn selected" data-color="normal" onclick="changePetColor('normal')">🤎 Normal</button>
                     <button class="color-btn" data-color="golden" onclick="changePetColor('golden')">🟡 Dorado</button>
                     <button class="color-btn" data-color="pink" onclick="changePetColor('pink')">🩷 Rosa</button>
                 </div>
             </div>
             <div class="modal-buttons">
-                <button onclick="saveSettings()">Guardar</button>
-                <button onclick="closeSettings()">Cancelar</button>
+                <button onclick="saveSettings()">💾 Guardar</button>
+                <button onclick="closeSettings()">❌ Cancelar</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal de tienda -->
-    <div class="modal-overlay" id="shopModal">
+    <!-- Modal de Tienda -->
+    <div id="shopModal" class="modal-overlay">
         <div class="modal-content shop-content">
             <h3>🛒 Tienda</h3>
-                <div class="shop-tabs">
-                    <button class="shop-tab active" data-tab="food" onclick="changeShopTab('food')">🍎 Comida</button>
-                    <button class="shop-tab" data-tab="accessories" onclick="changeShopTab('accessories')">👒 Accesorios</button>
-                    <button class="shop-tab" data-tab="decorations" onclick="changeShopTab('decorations')">🎨 Decoraciones</button>
-                    <button class="shop-tab" data-tab="toys" onclick="changeShopTab('toys')">🎾 Juguetes</button>
-                    <button class="shop-tab" data-tab="special" onclick="changeShopTab('special')">✨ Especiales</button>
-                </div>
-            <div class="shop-items" id="shopItems">
-                <!-- Los items se cargarán dinámicamente -->
+            <div class="shop-tabs">
+                <button class="shop-tab active" data-tab="food" onclick="changeShopTab('food')">🍎<br>Comida</button>
+                <button class="shop-tab" data-tab="accessories" onclick="changeShopTab('accessories')">👒<br>Accesorios</button>
+                <button class="shop-tab" data-tab="decorations" onclick="changeShopTab('decorations')">🎨<br>Decoración</button>
+                <button class="shop-tab" data-tab="toys" onclick="changeShopTab('toys')">🧸<br>Juguetes</button>
+                <button class="shop-tab" data-tab="special" onclick="changeShopTab('special')">✨<br>Especial</button>
             </div>
-            <button class="close-shop-btn" onclick="closeShop()">Cerrar</button>
+            <div id="shopItems" class="shop-items">
+                <!-- Los items se generan dinámicamente -->
+            </div>
+            <button class="close-shop-btn" onclick="closeShop()">🚪 Cerrar Tienda</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Overlay del Juego de Plataformas -->
+    <div id="platformGameOverlay" class="game-overlay">
+        <div class="platform-game-container">
+            <div class="game-score">Puntuación: <span id="gameScore">0</span></div>
+            <canvas id="gameCanvas" width="300" height="500"></canvas>
+            
+            <!-- Pantalla de inicio -->
+            <div id="gameStartScreen" class="game-start-screen">
+                <h2>🎮 Capibara Jump</h2>
+                <p>¡Ayuda a tu capibara a saltar lo más alto posible!</p>
+                <p>📱 Toca los lados para moverte<br>🖱️ Usa las flechas o espacio para saltar</p>
+                <button onclick="startGame()">🚀 Comenzar</button>
+                <button onclick="closeGame()">❌ Cerrar</button>
+            </div>
+            
+            <!-- Pantalla de fin de juego -->
+            <div id="gameOverScreen" class="game-over-screen" style="display: none;">
+                <h2>🏁 ¡Juego Terminado!</h2>
+                <p>Puntuación: <span id="finalScore">0</span></p>
+                <p>Monedas ganadas: <span id="coinsEarned">0</span></p>
+                <button onclick="restartGame()">🔄 Jugar de nuevo</button>
+                <button onclick="closeGame()">🚪 Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js?v=4.0"></script>
     
-    <!-- Registrar Service Worker para funcionamiento offline -->
+    <!-- Service Worker Registration -->
     <script>
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", function() {
-                navigator.serviceWorker.register("./sw.js")
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js?v=4.0')
                     .then(function(registration) {
-                        console.log("Service Worker registrado exitosamente:", registration.scope);
+                        console.log('SW registrado con éxito:', registration.scope);
+                        
+                        // Verificar actualizaciones cada 30 segundos
+                        setInterval(() => {
+                            registration.update();
+                        }, 30000);
+                        
+                        // Escuchar actualizaciones del service worker
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // Nueva versión disponible
+                                    if (confirm('¡Nueva versión disponible! ¿Quieres actualizar?')) {
+                                        window.location.reload();
+                                    }
+                                }
+                            });
+                        });
                     })
                     .catch(function(error) {
-                        console.log("Error al registrar Service Worker:", error);
+                        console.log('SW falló al registrarse:', error);
                     });
             });
         }
+
+        // Prevenir zoom en dispositivos móviles
+        document.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('gesturechange', function (e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('gestureend', function (e) {
+            e.preventDefault();
+        });
+
+        // Prevenir scroll bounce en iOS
+        document.body.addEventListener('touchstart', function (e) {
+            if (e.touches.length === 1) {
+                const touch = e.touches[0];
+                const element = touch.target;
+                
+                // Permitir scroll solo en elementos específicos
+                if (!element.closest('.shop-items') && !element.closest('input') && !element.closest('textarea')) {
+                    e.preventDefault();
+                }
+            }
+        }, { passive: false });
+
+        document.body.addEventListener('touchmove', function (e) {
+            if (e.touches.length === 1) {
+                const touch = e.touches[0];
+                const element = touch.target;
+                
+                // Permitir scroll solo en elementos específicos
+                if (!element.closest('.shop-items') && !element.closest('input') && !element.closest('textarea')) {
+                    e.preventDefault();
+                }
+            }
+        }, { passive: false });
+
+        // Función para crear efectos de partículas
+        function createParticles(x, y, color = '#ffd700', count = 5) {
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.background = color;
+                particle.style.animationDelay = (i * 0.1) + 's';
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => {
+                    particle.remove();
+                }, 2000);
+            }
+        }
+
+        // Agregar efectos de partículas en clics
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('action-btn') || e.target.classList.contains('shop-item')) {
+                createParticles(e.clientX, e.clientY);
+            }
+        });
+
+        // Detectar instalación de PWA
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Mostrar botón de instalación personalizado después de un tiempo
+            setTimeout(() => {
+                if (deferredPrompt && !localStorage.getItem('pwa_install_dismissed')) {
+                    const installBanner = document.createElement('div');
+                    installBanner.innerHTML = `
+                        <div style="position: fixed; bottom: 20px; left: 20px; right: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 4000; text-align: center;">
+                            <p style="margin: 0 0 10px 0; font-weight: 600;">📱 ¡Instala Capibara Virtual!</p>
+                            <p style="margin: 0 0 15px 0; font-size: 0.9em; opacity: 0.9;">Accede más rápido a tu mascota virtual</p>
+                            <button onclick="installPWA()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 15px; border-radius: 8px; margin-right: 10px; cursor: pointer; font-weight: 600;">✅ Instalar</button>
+                            <button onclick="dismissInstall()" style="background: rgba(255,255,255,0.1); border: none; color: white; padding: 8px 15px; border-radius: 8px; cursor: pointer;">❌ Ahora no</button>
+                        </div>
+                    `;
+                    document.body.appendChild(installBanner);
+                }
+            }, 10000); // Mostrar después de 10 segundos
+        });
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('PWA instalada');
+                    }
+                    deferredPrompt = null;
+                    dismissInstall();
+                });
+            }
+        }
+
+        function dismissInstall() {
+            localStorage.setItem('pwa_install_dismissed', 'true');
+            const banner = document.querySelector('[style*="position: fixed"]');
+            if (banner) {
+                banner.remove();
+            }
+        }
+
+        // Detectar cuando la PWA se instala
+        window.addEventListener('appinstalled', (evt) => {
+            console.log('PWA instalada exitosamente');
+            localStorage.setItem('pwa_installed', 'true');
+        });
     </script>
 </body>
 </html>
-

@@ -5,23 +5,49 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
+    animation: backgroundShift 10s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+    0%, 100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); }
+    50% { background: linear-gradient(135deg, #f093fb 0%, #667eea 50%, #764ba2 100%); }
 }
 
 .game-container {
-    background: white;
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
     padding: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    max-width: 400px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2);
+    max-width: 420px;
     width: 100%;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: rotate 20s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* Header mejorado */
@@ -29,120 +55,175 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 2;
 }
 
 .coins-display {
     display: flex;
     align-items: center;
     background: linear-gradient(135deg, #ffd700, #ffed4e);
-    padding: 5px 10px;
-    border-radius: 15px;
+    padding: 8px 15px;
+    border-radius: 20px;
     font-weight: bold;
     color: #8b4513;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    transition: all 0.3s ease;
+    animation: coinGlow 2s ease-in-out infinite;
+}
+
+@keyframes coinGlow {
+    0%, 100% { box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4); }
+    50% { box-shadow: 0 4px 25px rgba(255, 215, 0, 0.6); }
 }
 
 .coin-icon {
-    margin-right: 5px;
-    font-size: 1.2em;
+    margin-right: 8px;
+    font-size: 1.3em;
+    animation: coinSpin 3s linear infinite;
+}
+
+@keyframes coinSpin {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
 }
 
 .settings-btn {
-    background: #e2e8f0;
+    background: linear-gradient(135deg, #e2e8f0, #cbd5e0);
     border: none;
     border-radius: 50%;
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
-    font-size: 1.2em;
+    font-size: 1.3em;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .settings-btn:hover {
-    background: #cbd5e0;
-    transform: rotate(90deg);
+    background: linear-gradient(135deg, #cbd5e0, #a0aec0);
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 header h1 {
     color: #4a5568;
-    font-size: 1.5em;
+    font-size: 1.6em;
     margin: 0;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
 }
 
 .subtitle {
     color: #718096;
     margin-bottom: 20px;
-    font-size: 0.9em;
+    font-size: 0.95em;
+    position: relative;
+    z-index: 2;
 }
 
-/* Navegación de habitaciones */
+/* Navegación de habitaciones - CORREGIDO PARA ANDROID */
 .room-navigation {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    background: #f7fafc;
-    border-radius: 15px;
-    padding: 5px;
-    overflow-x: auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    margin-bottom: 20px;
+    background: rgba(247, 250, 252, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 6px;
+    position: relative;
+    z-index: 2;
 }
 
 .room-btn {
-    flex: 1;
     padding: 8px 4px;
     border: none;
     background: transparent;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 0.7em;
-    font-weight: bold;
+    font-weight: 600;
     color: #718096;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
-    min-width: 60px;
+    min-height: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.room-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 12px;
+}
+
+.room-btn:hover::before {
+    opacity: 0.1;
 }
 
 .room-btn:hover {
-    background: #e2e8f0;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    color: #4a5568;
 }
 
 .room-btn.active {
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
-    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    transform: translateY(-2px);
 }
 
-/* Contenedor de mascota con fondos dinámicos */
+.room-btn.active::before {
+    opacity: 0;
+}
+
+/* Contenedor de mascota con fondos dinámicos mejorados */
 .pet-container {
-    border-radius: 15px;
-    padding: 30px;
-    margin-bottom: 20px;
+    border-radius: 20px;
+    padding: 35px;
+    margin-bottom: 25px;
     position: relative;
     overflow: hidden;
     transition: all 0.5s ease;
-    min-height: 200px;
+    min-height: 220px;
+    box-shadow: inset 0 0 50px rgba(255, 255, 255, 0.1);
 }
 
-/* Fondos de habitaciones */
+/* Fondos de habitaciones mejorados */
 .pet-container.living {
-    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #fd79a8 100%);
 }
 
 .pet-container.kitchen {
-    background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
+    background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 50%, #e17055 100%);
 }
 
 .pet-container.bedroom {
-    background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+    background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 50%, #74b9ff 100%);
 }
 
 .pet-container.game {
-    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+    background: linear-gradient(135deg, #00b894 0%, #00cec9 50%, #55a3ff 100%);
 }
 
 .pet-container.shop {
-    background: linear-gradient(135deg, #e17055 0%, #d63031 100%);
+    background: linear-gradient(135deg, #e17055 0%, #d63031 50%, #fd79a8 100%);
 }
 
 .pet-container::before {
@@ -152,83 +233,84 @@ header h1 {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-    animation: shimmer 3s ease-in-out infinite;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    animation: shimmer 4s ease-in-out infinite;
 }
 
 @keyframes shimmer {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(180deg); }
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
 }
 
 .pet-display {
     position: relative;
-    z-index: 1;
+    z-index: 3;
 }
 
 .pet-image {
-    width: 150px;
-    height: 150px;
+    width: 160px;
+    height: 160px;
     object-fit: contain;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    z-index: 2;
+    z-index: 4;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
 }
 
-/* Animaciones de la mascota */
+/* Animaciones de la mascota mejoradas */
 .pet-image.eating {
-    animation: eating 1s ease-in-out;
+    animation: eating 1.2s ease-in-out;
 }
 
 .pet-image.playing {
-    animation: playing 1s ease-in-out;
+    animation: playing 1.5s ease-in-out;
 }
 
 .pet-image.sleeping {
-    animation: sleeping 2s ease-in-out infinite;
+    animation: sleeping 3s ease-in-out infinite;
 }
 
 .pet-image.happy {
-    animation: happy 0.8s ease-in-out;
+    animation: happy 1s ease-in-out;
 }
 
 .pet-image.sick {
-    animation: sick 0.5s ease-in-out infinite;
+    animation: sick 0.6s ease-in-out infinite;
 }
 
 @keyframes eating {
     0%, 100% { transform: translateY(0) scale(1); }
-    25% { transform: translateY(-5px) scale(1.05); }
-    50% { transform: translateY(0) scale(1.1); }
-    75% { transform: translateY(-3px) scale(1.05); }
+    25% { transform: translateY(-8px) scale(1.08); }
+    50% { transform: translateY(0) scale(1.15); }
+    75% { transform: translateY(-5px) scale(1.08); }
 }
 
 @keyframes playing {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    25% { transform: translateY(-10px) rotate(-5deg); }
-    50% { transform: translateY(-15px) rotate(5deg); }
-    75% { transform: translateY(-5px) rotate(-2deg); }
+    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+    25% { transform: translateY(-15px) rotate(-8deg) scale(1.1); }
+    50% { transform: translateY(-20px) rotate(8deg) scale(1.2); }
+    75% { transform: translateY(-8px) rotate(-4deg) scale(1.05); }
 }
 
 @keyframes sleeping {
-    0%, 100% { transform: translateY(0); opacity: 1; }
-    50% { transform: translateY(-3px); opacity: 0.8; }
+    0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+    50% { transform: translateY(-5px) scale(0.98); opacity: 0.8; }
 }
 
 @keyframes happy {
     0%, 100% { transform: translateY(0) scale(1); }
-    25% { transform: translateY(-15px) scale(1.1); }
-    50% { transform: translateY(-20px) scale(1.15); }
-    75% { transform: translateY(-10px) scale(1.05); }
+    25% { transform: translateY(-20px) scale(1.15); }
+    50% { transform: translateY(-25px) scale(1.25); }
+    75% { transform: translateY(-12px) scale(1.1); }
 }
 
 @keyframes sick {
     0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-3px); }
-    75% { transform: translateX(3px); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
 }
 
-/* Accesorios de la mascota */
+/* Accesorios de la mascota mejorados */
 .pet-accessories {
     position: absolute;
     top: 0;
@@ -236,76 +318,84 @@ header h1 {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 3;
+    z-index: 5;
 }
 
 .accessory {
     position: absolute;
-    font-size: 2em;
+    font-size: 1.8em;
     transition: all 0.3s ease;
+    z-index: 10;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    animation: accessoryFloat 3s ease-in-out infinite;
 }
 
-.accessory.hat {
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.accessory.glasses {
-    top: 40%;
-    left: 50%;
-    transform: translateX(-50%);
+@keyframes accessoryFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
 }
 
 .pet-name {
-    font-size: 1.2em;
-    font-weight: bold;
+    font-size: 1.4em;
+    font-weight: 700;
     color: #2d3748;
-    margin: 10px 0 5px 0;
+    margin: 15px 0 8px 0;
     position: relative;
-    z-index: 1;
+    z-index: 3;
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
 }
 
 .pet-mood {
-    font-size: 2em;
+    font-size: 2.2em;
     position: relative;
-    z-index: 1;
+    z-index: 3;
+    animation: moodPulse 2s ease-in-out infinite;
 }
 
-/* Estadísticas */
+@keyframes moodPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Estadísticas mejoradas */
 .stats-container {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 2;
 }
 
 .stat {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
-    gap: 10px;
+    margin-bottom: 12px;
+    gap: 12px;
 }
 
 .stat-label {
-    font-weight: bold;
+    font-weight: 600;
     color: #4a5568;
-    min-width: 70px;
+    min-width: 75px;
     text-align: left;
-    font-size: 0.85em;
+    font-size: 0.9em;
 }
 
 .stat-bar {
     flex: 1;
-    height: 18px;
-    background: #e2e8f0;
-    border-radius: 10px;
+    height: 22px;
+    background: rgba(226, 232, 240, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
     overflow: hidden;
     position: relative;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .stat-fill {
     height: 100%;
-    border-radius: 10px;
-    transition: width 0.5s ease, background-color 0.5s ease;
+    border-radius: 12px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s ease;
     position: relative;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .stat-fill::after {
@@ -315,8 +405,8 @@ header h1 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
-    animation: shine 2s ease-in-out infinite;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+    animation: shine 3s ease-in-out infinite;
 }
 
 @keyframes shine {
@@ -325,47 +415,86 @@ header h1 {
 }
 
 .stat-value {
-    font-weight: bold;
+    font-weight: 600;
     color: #4a5568;
-    min-width: 45px;
+    min-width: 50px;
     text-align: right;
-    font-size: 0.8em;
+    font-size: 0.85em;
 }
 
-/* Colores para las barras de estadísticas */
-#hungerBar { background: linear-gradient(90deg, #ff6b6b, #ee5a24); }
-#happinessBar { background: linear-gradient(90deg, #feca57, #ff9ff3); }
-#healthBar { background: linear-gradient(90deg, #48dbfb, #0abde3); }
-#energyBar { background: linear-gradient(90deg, #1dd1a1, #10ac84); }
-#cleanlinessBar { background: linear-gradient(90deg, #74b9ff, #0984e3); }
+/* Colores para las barras de estadísticas mejorados */
+#hungerBar { 
+    background: linear-gradient(90deg, #ff6b6b, #ee5a24);
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.4);
+}
+#happinessBar { 
+    background: linear-gradient(90deg, #feca57, #ff9ff3);
+    box-shadow: 0 0 15px rgba(254, 202, 87, 0.4);
+}
+#healthBar { 
+    background: linear-gradient(90deg, #48dbfb, #0abde3);
+    box-shadow: 0 0 15px rgba(72, 219, 251, 0.4);
+}
+#energyBar { 
+    background: linear-gradient(90deg, #1dd1a1, #10ac84);
+    box-shadow: 0 0 15px rgba(29, 209, 161, 0.4);
+}
+#cleanlinessBar { 
+    background: linear-gradient(90deg, #74b9ff, #0984e3);
+    box-shadow: 0 0 15px rgba(116, 185, 255, 0.4);
+}
 
-/* Contenedor de acciones dinámico */
+/* Contenedor de acciones dinámico - CORREGIDO PARA ANDROID */
 .actions-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 2;
 }
 
 .action-btn {
-    padding: 12px;
+    padding: 14px 8px;
     border: none;
-    border-radius: 10px;
-    font-size: 0.9em;
-    font-weight: bold;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    min-height: 50px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.action-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.action-btn:hover::before {
+    left: 100%;
 }
 
 .action-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 .action-btn:active {
-    transform: translateY(0);
+    transform: translateY(-1px) scale(0.98);
 }
 
 .action-btn:disabled {
@@ -374,142 +503,166 @@ header h1 {
     transform: none;
 }
 
-/* Botones específicos por habitación */
+/* Botones específicos por habitación mejorados */
 .feed-btn {
     background: linear-gradient(135deg, #ff6b6b, #ee5a24);
     color: white;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
 }
 
 .play-btn {
     background: linear-gradient(135deg, #feca57, #ff9ff3);
     color: white;
+    box-shadow: 0 4px 15px rgba(254, 202, 87, 0.3);
 }
 
 .heal-btn {
     background: linear-gradient(135deg, #48dbfb, #0abde3);
     color: white;
+    box-shadow: 0 4px 15px rgba(72, 219, 251, 0.3);
 }
 
 .sleep-btn {
     background: linear-gradient(135deg, #a55eea, #8854d0);
     color: white;
+    box-shadow: 0 4px 15px rgba(165, 94, 234, 0.3);
 }
 
 .clean-btn {
     background: linear-gradient(135deg, #74b9ff, #0984e3);
     color: white;
+    box-shadow: 0 4px 15px rgba(116, 185, 255, 0.3);
 }
 
 .shop-btn {
     background: linear-gradient(135deg, #fd79a8, #e84393);
     color: white;
+    box-shadow: 0 4px 15px rgba(253, 121, 168, 0.3);
 }
 
 .game-btn {
     background: linear-gradient(135deg, #00b894, #00cec9);
     color: white;
+    box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
 }
 
-/* Mensaje de estado */
+/* Mensaje de estado mejorado */
 .status-message {
-    background: #f7fafc;
-    border: 2px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 20px;
+    background: rgba(247, 250, 252, 0.9);
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(226, 232, 240, 0.5);
+    border-radius: 15px;
+    padding: 18px;
+    margin-bottom: 25px;
     color: #4a5568;
-    font-weight: bold;
-    min-height: 50px;
+    font-weight: 600;
+    min-height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .status-message.success {
-    background: #f0fff4;
-    border-color: #68d391;
+    background: rgba(240, 255, 244, 0.9);
+    border-color: rgba(104, 211, 145, 0.5);
     color: #2f855a;
+    box-shadow: 0 4px 15px rgba(104, 211, 145, 0.2);
 }
 
 .status-message.warning {
-    background: #fffaf0;
-    border-color: #f6ad55;
+    background: rgba(255, 250, 240, 0.9);
+    border-color: rgba(246, 173, 85, 0.5);
     color: #c05621;
+    box-shadow: 0 4px 15px rgba(246, 173, 85, 0.2);
 }
 
 .status-message.error {
-    background: #fed7d7;
-    border-color: #fc8181;
+    background: rgba(254, 215, 215, 0.9);
+    border-color: rgba(252, 129, 129, 0.5);
     color: #c53030;
+    box-shadow: 0 4px 15px rgba(252, 129, 129, 0.2);
 }
 
-/* Información del juego */
+/* Información del juego mejorada */
 .game-info {
-    background: #f8f9fa;
-    border-radius: 10px;
-    padding: 15px;
+    background: rgba(248, 249, 250, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 18px;
     color: #6c757d;
     font-size: 0.9em;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .game-info p {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 .level-progress {
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .level-bar {
     width: 100%;
-    height: 15px;
-    background: #e2e8f0;
-    border-radius: 10px;
+    height: 18px;
+    background: rgba(226, 232, 240, 0.8);
+    border-radius: 12px;
     overflow: hidden;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .level-fill {
     height: 100%;
     background: linear-gradient(90deg, #667eea, #764ba2);
-    border-radius: 10px;
-    transition: width 0.5s ease;
+    border-radius: 12px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.4);
 }
 
 .level-text {
-    font-size: 0.8em;
+    font-size: 0.85em;
     color: #4a5568;
+    font-weight: 500;
 }
 
 .reset-btn {
-    background: #dc3545;
+    background: linear-gradient(135deg, #dc3545, #c82333);
     color: white;
     border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
+    padding: 10px 18px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 0.8em;
-    margin-top: 10px;
-    transition: background 0.3s ease;
+    font-size: 0.85em;
+    margin-top: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
 }
 
 .reset-btn:hover {
-    background: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
 }
 
-/* Modales */
+/* Modales mejorados */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2000;
+    z-index: 3000;
     visibility: hidden;
     opacity: 0;
     transition: all 0.3s ease;
@@ -521,210 +674,299 @@ header h1 {
 }
 
 .modal-content {
-    background: white;
-    border-radius: 15px;
-    padding: 20px;
-    max-width: 350px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 25px;
+    max-width: 380px;
     width: 90%;
-    max-height: 80vh;
+    max-height: 85vh;
     overflow-y: auto;
-    transform: scale(0.8);
-    transition: transform 0.3s ease;
+    transform: scale(0.8) translateY(50px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
 .modal-overlay.active .modal-content {
-    transform: scale(1);
+    transform: scale(1) translateY(0);
 }
 
 .modal-content h3 {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     color: #4a5568;
     text-align: center;
+    font-size: 1.3em;
+    font-weight: 700;
 }
 
 .setting-item {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .setting-item label {
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+    margin-bottom: 8px;
+    font-weight: 600;
     color: #4a5568;
 }
 
 .setting-item input {
     width: 100%;
-    padding: 8px;
-    border: 2px solid #e2e8f0;
-    border-radius: 5px;
+    padding: 12px;
+    border: 2px solid rgba(226, 232, 240, 0.8);
+    border-radius: 10px;
     font-size: 1em;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.setting-item input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    outline: none;
 }
 
 .color-options {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     flex-wrap: wrap;
 }
 
 .color-btn {
-    padding: 8px 12px;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    background: white;
+    padding: 10px 15px;
+    border: 2px solid rgba(226, 232, 240, 0.8);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
     cursor: pointer;
     font-size: 0.9em;
     transition: all 0.3s ease;
+    font-weight: 500;
 }
 
 .color-btn:hover {
     border-color: #667eea;
     transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
 }
 
 .color-btn.selected {
     border-color: #667eea;
-    background: #f0f4ff;
+    background: rgba(102, 126, 234, 0.1);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .modal-buttons {
     display: flex;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 12px;
+    margin-top: 25px;
 }
 
 .modal-buttons button {
     flex: 1;
-    padding: 10px;
+    padding: 12px;
     border: none;
-    border-radius: 8px;
-    font-weight: bold;
+    border-radius: 12px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-size: 0.95em;
 }
 
 .modal-buttons button:first-child {
-    background: #667eea;
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .modal-buttons button:last-child {
-    background: #e2e8f0;
+    background: rgba(226, 232, 240, 0.8);
     color: #4a5568;
+    backdrop-filter: blur(10px);
 }
 
 .modal-buttons button:hover {
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Tienda */
+/* Tienda - CORREGIDO PARA ANDROID */
 .shop-content {
-    max-width: 400px;
+    max-width: 420px;
     width: 100%;
     box-sizing: border-box;
 }
 
 .shop-tabs {
-    display: flex;
-    margin-bottom: 20px;
-    background: #f7fafc;
-    border-radius: 10px;
-    padding: 5px;
-    overflow-x: auto;
-    white-space: nowrap;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-}
-
-.shop-tabs::-webkit-scrollbar {
-    display: none; /* Chrome, Safari and Opera */
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    margin-bottom: 25px;
+    background: rgba(247, 250, 252, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 6px;
 }
 
 .shop-tab {
-    flex: 0 0 auto;
-    padding: 8px 12px;
+    padding: 10px 6px;
     border: none;
     background: transparent;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 0.8em;
-    font-weight: bold;
+    font-size: 0.75em;
+    font-weight: 600;
     color: #718096;
     transition: all 0.3s ease;
     white-space: nowrap;
-    min-width: fit-content;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.shop-tab::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 10px;
+}
+
+.shop-tab:hover::before {
+    opacity: 0.1;
 }
 
 .shop-tab.active {
-    background: #667eea;
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.shop-tab.active::before {
+    opacity: 0;
 }
 
 .shop-items {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
-    margin-bottom: 20px;
-    max-height: 300px;
+    margin-bottom: 25px;
+    max-height: 350px;
     overflow-y: auto;
     overflow-x: hidden;
-    padding-right: 5px;
+    padding-right: 8px;
     box-sizing: border-box;
 }
 
-.shop-item {
-    background: #f7fafc;
+.shop-items::-webkit-scrollbar {
+    width: 6px;
+}
+
+.shop-items::-webkit-scrollbar-track {
+    background: rgba(226, 232, 240, 0.3);
     border-radius: 10px;
+}
+
+.shop-items::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.5);
+    border-radius: 10px;
+}
+
+.shop-items::-webkit-scrollbar-thumb:hover {
+    background: rgba(102, 126, 234, 0.7);
+}
+
+.shop-item {
+    background: rgba(247, 250, 252, 0.9);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
     padding: 15px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     box-sizing: border-box;
     width: 100%;
-    min-height: 120px;
+    min-height: 130px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     word-wrap: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.shop-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.shop-item:hover::before {
+    left: 100%;
 }
 
 .shop-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .shop-item.owned {
-    background: #e6fffa;
-    border: 2px solid #38b2ac;
+    background: rgba(230, 255, 250, 0.9);
+    border: 2px solid rgba(56, 178, 172, 0.5);
+    box-shadow: 0 4px 15px rgba(56, 178, 172, 0.2);
 }
 
 .shop-item.affordable {
-    border: 2px solid #667eea;
+    border: 2px solid rgba(102, 126, 234, 0.5);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
 }
 
 .shop-item.expensive {
     opacity: 0.6;
     cursor: not-allowed;
+    filter: grayscale(30%);
 }
 
 .shop-item-icon {
     font-size: 2em;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     line-height: 1;
     font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", "EmojiSymbols", sans-serif;
     display: block;
     width: 100%;
     text-align: center;
+    animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
 }
 
 .shop-item-name {
-    font-weight: bold;
-    margin-bottom: 5px;
+    font-weight: 600;
+    margin-bottom: 6px;
     color: #4a5568;
     font-size: 0.85em;
-    line-height: 1.2;
+    line-height: 1.3;
     word-break: break-word;
     overflow-wrap: break-word;
     hyphens: auto;
@@ -732,51 +974,56 @@ header h1 {
 
 .shop-item-price {
     color: #8b4513;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 0.9em;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
 }
 
 .shop-item-effect {
     font-size: 0.7em;
     color: #718096;
-    margin-top: 5px;
-    line-height: 1.1;
+    margin-top: 6px;
+    line-height: 1.2;
     word-break: break-word;
     overflow-wrap: break-word;
 }
 
 .close-shop-btn {
     width: 100%;
-    padding: 12px;
-    background: #e2e8f0;
+    padding: 15px;
+    background: linear-gradient(135deg, #e2e8f0, #cbd5e0);
     border: none;
-    border-radius: 8px;
-    font-weight: bold;
+    border-radius: 12px;
+    font-weight: 600;
     cursor: pointer;
     color: #4a5568;
     transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .close-shop-btn:hover {
-    background: #cbd5e0;
+    background: linear-gradient(135deg, #cbd5e0, #a0aec0);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Juego de plataformas */
+/* Juego de plataformas mejorado */
 .game-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 2000;
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0s, opacity 0.3s linear;
+    transition: all 0.3s ease;
 }
 
 .game-overlay.active {
@@ -785,32 +1032,35 @@ header h1 {
 }
 
 .platform-game-container {
-    background-color: #87CEEB;
+    background: linear-gradient(135deg, #87CEEB, #4682B4);
     border: 5px solid #556B2F;
-    border-radius: 10px;
-    width: 300px;
-    height: 500px;
+    border-radius: 15px;
+    width: 320px;
+    height: 520px;
     position: relative;
     overflow: hidden;
-    font-family: 'Press Start 2P', cursive;
+    font-family: 'Segoe UI', sans-serif;
     color: #fff;
     text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 .platform-game-container canvas {
     display: block;
-    background-color: #87CEEB;
+    background: linear-gradient(135deg, #87CEEB, #4682B4);
+    border-radius: 10px;
 }
 
 .game-score {
     position: absolute;
-    top: 10px;
+    top: 15px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 24px;
+    font-size: 28px;
     z-index: 10;
     color: #fff;
-    text-shadow: 2px 2px #000;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    font-weight: 700;
 }
 
 .game-start-screen, .game-over-screen {
@@ -819,7 +1069,8 @@ header h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -828,101 +1079,193 @@ header h1 {
 }
 
 .game-start-screen h2, .game-over-screen h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-size: 32px;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .game-start-screen p {
-    font-size: 14px;
-    margin-bottom: 20px;
+    font-size: 16px;
+    margin-bottom: 25px;
     text-align: center;
-    padding: 0 20px;
+    padding: 0 25px;
+    line-height: 1.4;
 }
 
 .game-start-screen button, .game-over-screen button {
-    background-color: #4CAF50;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
     color: white;
-    padding: 10px 20px;
+    padding: 12px 25px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 18px;
+    font-weight: 600;
     cursor: pointer;
-    margin: 5px;
+    margin: 8px;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
 }
 
 .game-start-screen button:hover, .game-over-screen button:hover {
-    background-color: #45a049;
+    background: linear-gradient(135deg, #45a049, #3d8b40);
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
 }
 
 .game-over-screen p {
-    font-size: 20px;
-    margin: 10px 0;
+    font-size: 22px;
+    margin: 12px 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
-/* Responsive */
+/* Lottie Animation Container */
+#capyAnimation {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 60px;
+    height: 60px;
+    z-index: 10;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+/* Responsive - MEJORADO PARA ANDROID */
 @media (max-width: 480px) {
     .game-container {
         padding: 15px;
-        margin: 5px;
+        margin: 8px;
+        border-radius: 20px;
     }
     
     .header-top h1 {
-        font-size: 1.3em;
+        font-size: 1.4em;
     }
     
     .room-navigation {
-        flex-wrap: wrap;
-        gap: 5px;
+        gap: 3px;
+        padding: 4px;
     }
     
     .room-btn {
-        font-size: 0.6em;
+        font-size: 0.65em;
         padding: 6px 3px;
+        min-height: 40px;
     }
     
     .actions-container {
-        grid-template-columns: 1fr;
-        gap: 8px;
+        gap: 10px;
     }
     
     .action-btn {
-        padding: 15px;
-        font-size: 1em;
+        padding: 12px 6px;
+        font-size: 0.8em;
+        min-height: 45px;
     }
     
     .shop-items {
-        grid-template-columns: 1fr;
+        gap: 12px;
+        max-height: 320px;
+    }
+    
+    .shop-item {
+        min-height: 120px;
+        padding: 12px;
+    }
+    
+    .shop-item-icon {
+        font-size: 1.8em;
+    }
+    
+    .shop-item-name {
+        font-size: 0.8em;
+    }
+    
+    .shop-item-price {
+        font-size: 0.85em;
+    }
+    
+    .shop-item-effect {
+        font-size: 0.65em;
+    }
+    
+    .shop-tab {
+        padding: 8px 4px;
+        font-size: 0.7em;
+        min-height: 40px;
+    }
+    
+    .pet-container {
+        padding: 25px;
+        min-height: 200px;
+    }
+    
+    .pet-image {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .platform-game-container {
+        width: 300px;
+        height: 500px;
+    }
+    
+    #capyAnimation {
+        width: 50px;
+        height: 50px;
     }
 }
 
-/* Estados especiales de la mascota */
+/* Estados especiales de la mascota mejorados */
 .pet-sleeping {
-    filter: brightness(0.7);
+    filter: brightness(0.7) saturate(0.8);
 }
 
 .pet-sick {
     animation: shake 0.5s ease-in-out infinite;
+    filter: hue-rotate(120deg) saturate(0.6);
 }
 
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
 }
 
 .pet-happy {
-    animation: bounce 1s ease-in-out infinite;
+    animation: bounce 1.2s ease-in-out infinite;
+    filter: brightness(1.2) saturate(1.3);
 }
 
 .pet-sad {
-    filter: grayscale(50%);
+    filter: grayscale(60%) brightness(0.8);
     animation: none;
 }
 
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-10px); }
-    60% { transform: translateY(-5px); }
+    40% { transform: translateY(-15px); }
+    60% { transform: translateY(-8px); }
+}
+
+/* Efectos adicionales de partículas */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #ffd700;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleFloat 2s ease-out forwards;
+}
+
+@keyframes particleFloat {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px) scale(0);
+    }
 }
