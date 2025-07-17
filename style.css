@@ -24,10 +24,50 @@ body {
     text-align: center;
 }
 
+/* Header mejorado */
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.coins-display {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    color: #8b4513;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.coin-icon {
+    margin-right: 5px;
+    font-size: 1.2em;
+}
+
+.settings-btn {
+    background: #e2e8f0;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: all 0.3s ease;
+}
+
+.settings-btn:hover {
+    background: #cbd5e0;
+    transform: rotate(90deg);
+}
+
 header h1 {
     color: #4a5568;
-    margin-bottom: 5px;
-    font-size: 1.8em;
+    font-size: 1.5em;
+    margin: 0;
 }
 
 .subtitle {
@@ -36,13 +76,73 @@ header h1 {
     font-size: 0.9em;
 }
 
+/* Navegación de habitaciones */
+.room-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    background: #f7fafc;
+    border-radius: 15px;
+    padding: 5px;
+    overflow-x: auto;
+}
+
+.room-btn {
+    flex: 1;
+    padding: 8px 4px;
+    border: none;
+    background: transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.7em;
+    font-weight: bold;
+    color: #718096;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    min-width: 60px;
+}
+
+.room-btn:hover {
+    background: #e2e8f0;
+    transform: translateY(-2px);
+}
+
+.room-btn.active {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+}
+
+/* Contenedor de mascota con fondos dinámicos */
 .pet-container {
-    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
     border-radius: 15px;
     padding: 30px;
     margin-bottom: 20px;
     position: relative;
     overflow: hidden;
+    transition: all 0.5s ease;
+    min-height: 200px;
+}
+
+/* Fondos de habitaciones */
+.pet-container.living {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+}
+
+.pet-container.kitchen {
+    background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
+}
+
+.pet-container.bedroom {
+    background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+}
+
+.pet-container.game {
+    background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+}
+
+.pet-container.shop {
+    background: linear-gradient(135deg, #e17055 0%, #d63031 100%);
 }
 
 .pet-container::before {
@@ -61,25 +161,107 @@ header h1 {
     50% { transform: rotate(180deg); }
 }
 
-.pet-sprite {
-    font-size: 4em;
-    margin-bottom: 10px;
-    animation: bounce 2s ease-in-out infinite;
+.pet-display {
     position: relative;
     z-index: 1;
 }
 
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-10px); }
-    60% { transform: translateY(-5px); }
+.pet-image {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    z-index: 2;
+}
+
+/* Animaciones de la mascota */
+.pet-image.eating {
+    animation: eating 1s ease-in-out;
+}
+
+.pet-image.playing {
+    animation: playing 1s ease-in-out;
+}
+
+.pet-image.sleeping {
+    animation: sleeping 2s ease-in-out infinite;
+}
+
+.pet-image.happy {
+    animation: happy 0.8s ease-in-out;
+}
+
+.pet-image.sick {
+    animation: sick 0.5s ease-in-out infinite;
+}
+
+@keyframes eating {
+    0%, 100% { transform: translateY(0) scale(1); }
+    25% { transform: translateY(-5px) scale(1.05); }
+    50% { transform: translateY(0) scale(1.1); }
+    75% { transform: translateY(-3px) scale(1.05); }
+}
+
+@keyframes playing {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(-5deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
+    75% { transform: translateY(-5px) rotate(-2deg); }
+}
+
+@keyframes sleeping {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(-3px); opacity: 0.8; }
+}
+
+@keyframes happy {
+    0%, 100% { transform: translateY(0) scale(1); }
+    25% { transform: translateY(-15px) scale(1.1); }
+    50% { transform: translateY(-20px) scale(1.15); }
+    75% { transform: translateY(-10px) scale(1.05); }
+}
+
+@keyframes sick {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+}
+
+/* Accesorios de la mascota */
+.pet-accessories {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.accessory {
+    position: absolute;
+    font-size: 2em;
+    transition: all 0.3s ease;
+}
+
+.accessory.hat {
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.accessory.glasses {
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .pet-name {
     font-size: 1.2em;
     font-weight: bold;
     color: #2d3748;
-    margin-bottom: 5px;
+    margin: 10px 0 5px 0;
     position: relative;
     z-index: 1;
 }
@@ -90,6 +272,7 @@ header h1 {
     z-index: 1;
 }
 
+/* Estadísticas */
 .stats-container {
     margin-bottom: 20px;
 }
@@ -97,7 +280,7 @@ header h1 {
 .stat {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     gap: 10px;
 }
 
@@ -106,12 +289,12 @@ header h1 {
     color: #4a5568;
     min-width: 70px;
     text-align: left;
-    font-size: 0.9em;
+    font-size: 0.85em;
 }
 
 .stat-bar {
     flex: 1;
-    height: 20px;
+    height: 18px;
     background: #e2e8f0;
     border-radius: 10px;
     overflow: hidden;
@@ -146,7 +329,7 @@ header h1 {
     color: #4a5568;
     min-width: 45px;
     text-align: right;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 
 /* Colores para las barras de estadísticas */
@@ -154,7 +337,9 @@ header h1 {
 #happinessBar { background: linear-gradient(90deg, #feca57, #ff9ff3); }
 #healthBar { background: linear-gradient(90deg, #48dbfb, #0abde3); }
 #energyBar { background: linear-gradient(90deg, #1dd1a1, #10ac84); }
+#cleanlinessBar { background: linear-gradient(90deg, #74b9ff, #0984e3); }
 
+/* Contenedor de acciones dinámico */
 .actions-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -183,6 +368,13 @@ header h1 {
     transform: translateY(0);
 }
 
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Botones específicos por habitación */
 .feed-btn {
     background: linear-gradient(135deg, #ff6b6b, #ee5a24);
     color: white;
@@ -203,6 +395,22 @@ header h1 {
     color: white;
 }
 
+.clean-btn {
+    background: linear-gradient(135deg, #74b9ff, #0984e3);
+    color: white;
+}
+
+.shop-btn {
+    background: linear-gradient(135deg, #fd79a8, #e84393);
+    color: white;
+}
+
+.game-btn {
+    background: linear-gradient(135deg, #00b894, #00cec9);
+    color: white;
+}
+
+/* Mensaje de estado */
 .status-message {
     background: #f7fafc;
     border: 2px solid #e2e8f0;
@@ -215,8 +423,28 @@ header h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
 }
 
+.status-message.success {
+    background: #f0fff4;
+    border-color: #68d391;
+    color: #2f855a;
+}
+
+.status-message.warning {
+    background: #fffaf0;
+    border-color: #f6ad55;
+    color: #c05621;
+}
+
+.status-message.error {
+    background: #fed7d7;
+    border-color: #fc8181;
+    color: #c53030;
+}
+
+/* Información del juego */
 .game-info {
     background: #f8f9fa;
     border-radius: 10px;
@@ -227,6 +455,31 @@ header h1 {
 
 .game-info p {
     margin-bottom: 5px;
+}
+
+.level-progress {
+    margin: 10px 0;
+}
+
+.level-bar {
+    width: 100%;
+    height: 15px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.level-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.level-text {
+    font-size: 0.8em;
+    color: #4a5568;
 }
 
 .reset-btn {
@@ -245,70 +498,232 @@ header h1 {
     background: #c82333;
 }
 
-/* Estados especiales de la mascota */
-.pet-sleeping {
-    filter: brightness(0.7);
+/* Modales */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
 }
 
-.pet-sick {
-    animation: shake 0.5s ease-in-out infinite;
+.modal-overlay.active {
+    visibility: visible;
+    opacity: 1;
 }
 
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
+.modal-content {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    max-width: 350px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
 }
 
-.pet-happy {
-    animation: bounce 1s ease-in-out infinite;
+.modal-overlay.active .modal-content {
+    transform: scale(1);
 }
 
-.pet-sad {
-    filter: grayscale(50%);
-    animation: none;
+.modal-content h3 {
+    margin-bottom: 20px;
+    color: #4a5568;
+    text-align: center;
 }
 
-/* Responsive */
-@media (max-width: 480px) {
-    .game-container {
-        padding: 15px;
-        margin: 5px;
-    }
-    
-    .pet-sprite {
-        font-size: 3em;
-    }
-    
-    .actions-container {
-        grid-template-columns: 1fr;
-        gap: 8px;
-    }
-    
-    .action-btn {
-        padding: 15px;
-        font-size: 1em;
-    }
+.setting-item {
+    margin-bottom: 15px;
 }
 
-
-
-.pet-image {
-    width: 150px;
-    height: 150px;
-    object-fit: contain;
-    transition: transform 0.3s ease-in-out;
+.setting-item label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #4a5568;
 }
 
-.pet-image.happy-animation {
-    animation: bounce 0.5s ease-in-out;
+.setting-item input {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #e2e8f0;
+    border-radius: 5px;
+    font-size: 1em;
 }
 
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+.color-options {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
+.color-btn {
+    padding: 8px 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.color-btn:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.color-btn.selected {
+    border-color: #667eea;
+    background: #f0f4ff;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-buttons button:first-child {
+    background: #667eea;
+    color: white;
+}
+
+.modal-buttons button:last-child {
+    background: #e2e8f0;
+    color: #4a5568;
+}
+
+.modal-buttons button:hover {
+    transform: translateY(-2px);
+}
+
+/* Tienda */
+.shop-content {
+    max-width: 400px;
+}
+
+.shop-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    background: #f7fafc;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.shop-tab {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #718096;
+    transition: all 0.3s ease;
+}
+
+.shop-tab.active {
+    background: #667eea;
+    color: white;
+}
+
+.shop-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.shop-item {
+    background: #f7fafc;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.shop-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.shop-item.owned {
+    background: #e6fffa;
+    border: 2px solid #38b2ac;
+}
+
+.shop-item.affordable {
+    border: 2px solid #667eea;
+}
+
+.shop-item.expensive {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.shop-item-icon {
+    font-size: 2em;
+    margin-bottom: 5px;
+}
+
+.shop-item-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #4a5568;
+}
+
+.shop-item-price {
+    color: #8b4513;
+    font-weight: bold;
+}
+
+.shop-item-effect {
+    font-size: 0.8em;
+    color: #718096;
+    margin-top: 5px;
+}
+
+.close-shop-btn {
+    width: 100%;
+    padding: 12px;
+    background: #e2e8f0;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #4a5568;
+    transition: all 0.3s ease;
+}
+
+.close-shop-btn:hover {
+    background: #cbd5e0;
+}
+
+/* Juego de plataformas */
 .game-overlay {
     position: fixed;
     top: 0;
@@ -331,8 +746,8 @@ header h1 {
 }
 
 .platform-game-container {
-    background-color: #87CEEB; /* Sky blue */
-    border: 5px solid #556B2F; /* Dark Olive Green */
+    background-color: #87CEEB;
+    border: 5px solid #556B2F;
     border-radius: 10px;
     width: 300px;
     height: 500px;
@@ -378,6 +793,13 @@ header h1 {
     margin-bottom: 20px;
 }
 
+.game-start-screen p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 0 20px;
+}
+
 .game-start-screen button, .game-over-screen button {
     background-color: #4CAF50;
     color: white;
@@ -386,11 +808,83 @@ header h1 {
     border-radius: 5px;
     font-size: 18px;
     cursor: pointer;
-    margin-top: 20px;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+.game-start-screen button:hover, .game-over-screen button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
 }
 
 .game-over-screen p {
     font-size: 20px;
-    margin-top: 10px;
+    margin: 10px 0;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .game-container {
+        padding: 15px;
+        margin: 5px;
+    }
+    
+    .header-top h1 {
+        font-size: 1.3em;
+    }
+    
+    .room-navigation {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    
+    .room-btn {
+        font-size: 0.6em;
+        padding: 6px 3px;
+    }
+    
+    .actions-container {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .action-btn {
+        padding: 15px;
+        font-size: 1em;
+    }
+    
+    .shop-items {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Estados especiales de la mascota */
+.pet-sleeping {
+    filter: brightness(0.7);
+}
+
+.pet-sick {
+    animation: shake 0.5s ease-in-out infinite;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.pet-happy {
+    animation: bounce 1s ease-in-out infinite;
+}
+
+.pet-sad {
+    filter: grayscale(50%);
+    animation: none;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
 }
 

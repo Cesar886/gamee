@@ -14,23 +14,53 @@
     <link rel="manifest" href="manifest.json">
     
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNCIgZmlsbD0idXJsKCNncmFkaWVudDBfbGluZWFyXzFfMSkiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQwX2xpbmVhcl8xXzEiIHgxPSIwIiB5MT0iMCIgeDI9IjMyIiB5Mj0iMzIiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzY2N2VlYSIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM3NjRiYTIiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8dGV4dCB4PSIxNiIgeT0iMjIiIGZvbnQtc2l6ZT0iMTYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfjbE8L3RleHQ+Cjwvc3ZnPgo=" type="image/svg+xml">
+    <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNCIgZmlsbD0idXJsKCNncmFkaWVudDBfbGluZWFyXzFfMSkiLz4KPGRlZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQwX2xpbmVhcjFfMSIgeDE9IjAiIHkxPSIwIiB4Mj0iMzIiIHkyPSIzMiIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgo8c3RvcCBzdG9wLWNvbG9yPSIjNjY3ZWVhIi8+CjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzc2NGJhMiIvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+Cjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1zaXplPSIxNiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+8J+NsTwvdGV4dD4KPC9zdmc+Cg==" type="image/svg+xml">
 </head>
 <body>
     <div class="game-container">
+        <!-- Header con monedas y configuración -->
         <header>
-            <h1>🦫 Mi Capibara Virtual</h1>
+            <div class="header-top">
+                <div class="coins-display">
+                    <span class="coin-icon">🪙</span>
+                    <span id="coinCount">0</span>
+                </div>
+                <h1>🦫 Mi Capibara Virtual</h1>
+                <button class="settings-btn" onclick="openSettings()">⚙️</button>
+            </div>
             <p class="subtitle">¡Cuida de tu adorable capibara!</p>
         </header>
 
-        <div class="pet-container">
+        <!-- Navegación de habitaciones -->
+        <div class="room-navigation">
+            <button class="room-btn active" data-room="living" onclick="changeRoom('living')">
+                🏠 Sala
+            </button>
+            <button class="room-btn" data-room="kitchen" onclick="changeRoom('kitchen')">
+                🍽️ Cocina
+            </button>
+            <button class="room-btn" data-room="bedroom" onclick="changeRoom('bedroom')">
+                🛏️ Dormitorio
+            </button>
+            <button class="room-btn" data-room="game" onclick="changeRoom('game')">
+                🎮 Juegos
+            </button>
+            <button class="room-btn" data-room="shop" onclick="changeRoom('shop')">
+                🛒 Tienda
+            </button>
+        </div>
+
+        <!-- Contenedor principal de la mascota -->
+        <div class="pet-container" id="petContainer">
             <div class="pet-display">
                 <img id="petSprite" src="capibara_normal.png" alt="Capibara" class="pet-image">
+                <div class="pet-accessories" id="petAccessories"></div>
                 <div class="pet-name" id="petName">Capibara</div>
                 <div class="pet-mood" id="petMood">😊</div>
             </div>
         </div>
 
+        <!-- Estadísticas -->
         <div class="stats-container">
             <div class="stat">
                 <span class="stat-label">Hambre:</span>
@@ -63,48 +93,98 @@
                 </div>
                 <span class="stat-value" id="energyValue">100%</span>
             </div>
+
+            <div class="stat">
+                <span class="stat-label">Limpieza:</span>
+                <div class="stat-bar">
+                    <div class="stat-fill" id="cleanlinessBar"></div>
+                </div>
+                <span class="stat-value" id="cleanlinessValue">100%</span>
+            </div>
         </div>
 
-        <div class="actions-container">
-            <button class="action-btn feed-btn" onclick="feedPet()">
-                🍎 Alimentar
-            </button>
-            <button class="action-btn play-btn" onclick="playWithPet()">
-                🎾 Jugar
-            </button>
-            <button class="action-btn heal-btn" onclick="healPet()">
-                💊 Curar
-            </button>
-            <button class="action-btn sleep-btn" onclick="putToSleep()">
-                😴 Dormir
-            </button>
+        <!-- Contenedor de acciones dinámico -->
+        <div class="actions-container" id="actionsContainer">
+            <!-- Las acciones cambiarán según la habitación -->
         </div>
 
+        <!-- Mensaje de estado -->
         <div class="status-message" id="statusMessage">
             ¡Tu mascota está feliz y saludable!
         </div>
 
+        <!-- Información del juego -->
         <div class="game-info">
-            <p>Edad: <span id="petAge">0</span> días</p>
+            <p>Edad: <span id="petAge">0</span> días | Nivel: <span id="petLevel">1</span></p>
             <p>Última vez alimentada: <span id="lastFed">Nunca</span></p>
+            <div class="level-progress">
+                <div class="level-bar">
+                    <div class="level-fill" id="levelBar"></div>
+                </div>
+                <span class="level-text">EXP: <span id="expPoints">0</span>/100</span>
+            </div>
             <button class="reset-btn" onclick="resetPet()">🔄 Reiniciar Mascota</button>
         </div>
     </div>
 
+    <!-- Overlay del juego de plataformas -->
     <div class="game-overlay" id="platformGameOverlay">
         <div class="platform-game-container">
             <div class="game-score" id="gameScore">0</div>
             <canvas id="gameCanvas" width="300" height="500"></canvas>
             <div class="game-start-screen" id="gameStartScreen">
                 <h2>¡Salto de Capibara!</h2>
+                <p>Usa las flechas o toca la pantalla para moverte</p>
                 <button onclick="startGame()">Empezar</button>
             </div>
             <div class="game-over-screen" id="gameOverScreen" style="display:none;">
                 <h2>¡Juego Terminado!</h2>
                 <p>Puntuación: <span id="finalScore">0</span></p>
+                <p>Monedas ganadas: <span id="coinsEarned">0</span></p>
                 <button onclick="restartGame()">Volver a Jugar</button>
                 <button onclick="closeGame()">Cerrar</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal de configuración -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-content">
+            <h3>Configuración</h3>
+            <div class="setting-item">
+                <label for="petNameInput">Nombre de la mascota:</label>
+                <input type="text" id="petNameInput" maxlength="15">
+            </div>
+            <div class="setting-item">
+                <label>Color del capibara:</label>
+                <div class="color-options">
+                    <button class="color-btn" data-color="normal" onclick="changePetColor('normal')">🟤 Normal</button>
+                    <button class="color-btn" data-color="golden" onclick="changePetColor('golden')">🟡 Dorado</button>
+                    <button class="color-btn" data-color="pink" onclick="changePetColor('pink')">🩷 Rosa</button>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button onclick="saveSettings()">Guardar</button>
+                <button onclick="closeSettings()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de tienda -->
+    <div class="modal-overlay" id="shopModal">
+        <div class="modal-content shop-content">
+            <h3>🛒 Tienda</h3>
+                <div class="shop-tabs">
+                    <button class="shop-tab active" data-tab="food" onclick="changeShopTab('food')">🍎 Comida</button>
+                    <button class="shop-tab" data-tab="accessories" onclick="changeShopTab('accessories')">👒 Accesorios</button>
+                    <button class="shop-tab" data-tab="decorations" onclick="changeShopTab('decorations')">🎨 Decoraciones</button>
+                    <button class="shop-tab" data-tab="toys" onclick="changeShopTab('toys')">🎾 Juguetes</button>
+                    <button class="shop-tab" data-tab="special" onclick="changeShopTab('special')">✨ Especiales</button>
+                </div>
+            <div class="shop-items" id="shopItems">
+                <!-- Los items se cargarán dinámicamente -->
+            </div>
+            <button class="close-shop-btn" onclick="closeShop()">Cerrar</button>
         </div>
     </div>
 
@@ -112,17 +192,18 @@
     
     <!-- Registrar Service Worker para funcionamiento offline -->
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('./sw.js')
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function() {
+                navigator.serviceWorker.register("./sw.js")
                     .then(function(registration) {
-                        console.log('Service Worker registrado exitosamente:', registration.scope);
+                        console.log("Service Worker registrado exitosamente:", registration.scope);
                     })
                     .catch(function(error) {
-                        console.log('Error al registrar Service Worker:', error);
+                        console.log("Error al registrar Service Worker:", error);
                     });
             });
         }
     </script>
 </body>
 </html>
+
