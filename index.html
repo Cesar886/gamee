@@ -2,12 +2,15 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
     <title>Capibara Virtual - Mascota Digital</title>
-    <link rel="stylesheet" href="style.css?v=4.0">
+    <link rel="stylesheet" href="style.css?v=5.0">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#667eea">
     <meta name="description" content="Cuida de tu capibara virtual en esta adorable mascota digital">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
     
     <!-- Lottie Web Library -->
     <script src="https://unpkg.com/lottie-web@5.7.4/build/player/lottie.min.js"></script>
@@ -21,6 +24,16 @@
     <link rel="preload" href="capibara_normal.png" as="image">
     <link rel="preload" href="capibara_feliz.png" as="image">
     <link rel="preload" href="capibara_saltando.png" as="image">
+    
+    <!-- Prevent zoom and improve touch -->
+    <style>
+        html, body {
+            touch-action: manipulation;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
 </head>
 <body>
     <div class="game-container">
@@ -140,16 +153,23 @@
     <div id="settingsModal" class="modal-overlay">
         <div class="modal-content">
             <h3>⚙️ Configuración</h3>
-            <div class="setting-item">
-                <label for="petNameInput">Nombre de la mascota:</label>
-                <input type="text" id="petNameInput" maxlength="15" placeholder="Nombre de tu capibara">
-            </div>
-            <div class="setting-item">
-                <label>Color de la mascota:</label>
-                <div class="color-options">
-                    <button class="color-btn selected" data-color="normal" onclick="changePetColor('normal')">🤎 Normal</button>
-                    <button class="color-btn" data-color="golden" onclick="changePetColor('golden')">🟡 Dorado</button>
-                    <button class="color-btn" data-color="pink" onclick="changePetColor('pink')">🩷 Rosa</button>
+            <div class="modal-body">
+                <div class="setting-item">
+                    <label for="petNameInput">Nombre de la mascota:</label>
+                    <input type="text" id="petNameInput" maxlength="15" placeholder="Nombre de tu capibara">
+                </div>
+                <div class="setting-item">
+                    <label>Color de la mascota:</label>
+                    <div class="color-options">
+                        <button class="color-btn selected" data-color="normal" onclick="changePetColor('normal')">🤎 Normal</button>
+                        <button class="color-btn" data-color="purple" onclick="changePetColor('purple')">💜 Morado</button>
+                        <button class="color-btn" data-color="violet" onclick="changePetColor('violet')">🔮 Violeta</button>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <button class="action-btn game-btn" onclick="showAchievements()" style="width: 100%; margin-top: 10px;">
+                        🏆 Ver Logros
+                    </button>
                 </div>
             </div>
             <div class="modal-buttons">
@@ -162,7 +182,15 @@
     <!-- Modal de Tienda -->
     <div id="shopModal" class="modal-overlay">
         <div class="modal-content shop-content">
-            <h3>🛒 Tienda</h3>
+            <div class="shop-header">
+                <div class="shop-title">
+                    🛒 Tienda
+                </div>
+                <div class="shop-coins">
+                    <span class="coin-icon">🪙</span>
+                    <span id="shopCoinCount">100</span>
+                </div>
+            </div>
             <div class="shop-tabs">
                 <button class="shop-tab active" data-tab="food" onclick="changeShopTab('food')">🍎<br>Comida</button>
                 <button class="shop-tab" data-tab="accessories" onclick="changeShopTab('accessories')">👒<br>Accesorios</button>
@@ -204,13 +232,13 @@
     </div>
 
     <!-- Scripts -->
-    <script src="script.js?v=4.0"></script>
+    <script src="script.js?v=5.0"></script>
     
     <!-- Service Worker Registration -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js?v=4.0')
+                navigator.serviceWorker.register('sw.js?v=5.0')
                     .then(function(registration) {
                         console.log('SW registrado con éxito:', registration.scope);
                         
@@ -224,10 +252,19 @@
                             const newWorker = registration.installing;
                             newWorker.addEventListener('statechange', () => {
                                 if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                    // Nueva versión disponible
-                                    if (confirm('¡Nueva versión disponible! ¿Quieres actualizar?')) {
-                                        window.location.reload();
-                                    }
+                                    // Nueva versión disponible - usar modal en lugar de confirm
+                                    ModalSystem.show(
+                                        '🔄 Actualización Disponible',
+                                        '<p>¡Nueva versión disponible! ¿Quieres actualizar?</p>',
+                                        [
+                                            { text: '✅ Actualizar', value: 'update' },
+                                            { text: '❌ Después', value: 'later' }
+                                        ]
+                                    ).then(result => {
+                                        if (result && result.value === 'update') {
+                                            window.location.reload();
+                                        }
+                                    });
                                 }
                             });
                         });
@@ -251,14 +288,23 @@
             e.preventDefault();
         });
 
-        // Prevenir scroll bounce en iOS
+        // Prevenir scroll bounce en iOS y mejorar touch en Android
+        let touchStartY = 0;
+        
         document.body.addEventListener('touchstart', function (e) {
+            touchStartY = e.touches[0].clientY;
+            
             if (e.touches.length === 1) {
                 const touch = e.touches[0];
                 const element = touch.target;
                 
                 // Permitir scroll solo en elementos específicos
-                if (!element.closest('.shop-items') && !element.closest('input') && !element.closest('textarea')) {
+                if (!element.closest('.shop-items') && 
+                    !element.closest('.game-container') && 
+                    !element.closest('input') && 
+                    !element.closest('textarea') &&
+                    !element.closest('.achievements-list') &&
+                    !element.closest('.modal-content')) {
                     e.preventDefault();
                 }
             }
@@ -268,35 +314,58 @@
             if (e.touches.length === 1) {
                 const touch = e.touches[0];
                 const element = touch.target;
+                const touchY = touch.clientY;
                 
                 // Permitir scroll solo en elementos específicos
-                if (!element.closest('.shop-items') && !element.closest('input') && !element.closest('textarea')) {
+                if (!element.closest('.shop-items') && 
+                    !element.closest('.game-container') && 
+                    !element.closest('input') && 
+                    !element.closest('textarea') &&
+                    !element.closest('.achievements-list') &&
+                    !element.closest('.modal-content')) {
                     e.preventDefault();
+                }
+                
+                // Prevenir scroll bounce
+                const scrollableElement = element.closest('.game-container');
+                if (scrollableElement) {
+                    const isScrollingUp = touchY > touchStartY;
+                    const isScrollingDown = touchY < touchStartY;
+                    const isAtTop = scrollableElement.scrollTop === 0;
+                    const isAtBottom = scrollableElement.scrollTop + scrollableElement.clientHeight >= scrollableElement.scrollHeight;
+                    
+                    if ((isAtTop && isScrollingUp) || (isAtBottom && isScrollingDown)) {
+                        e.preventDefault();
+                    }
                 }
             }
         }, { passive: false });
 
-        // Función para crear efectos de partículas
-        function createParticles(x, y, color = '#ffd700', count = 5) {
+        // Función para crear efectos de partículas mejorada
+        function createParticles(x, y, color = '#ffd700', count = 8) {
             for (let i = 0; i < count; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
-                particle.style.left = x + 'px';
-                particle.style.top = y + 'px';
+                particle.style.left = (x + Math.random() * 20 - 10) + 'px';
+                particle.style.top = (y + Math.random() * 20 - 10) + 'px';
                 particle.style.background = color;
                 particle.style.animationDelay = (i * 0.1) + 's';
                 
                 document.body.appendChild(particle);
                 
                 setTimeout(() => {
-                    particle.remove();
-                }, 2000);
+                    if (particle.parentNode) {
+                        particle.remove();
+                    }
+                }, 2500);
             }
         }
 
         // Agregar efectos de partículas en clics
         document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('action-btn') || e.target.classList.contains('shop-item')) {
+            if (e.target.classList.contains('action-btn') || 
+                e.target.classList.contains('shop-item') ||
+                e.target.classList.contains('room-btn')) {
                 createParticles(e.clientX, e.clientY);
             }
         });
@@ -310,18 +379,22 @@
             // Mostrar botón de instalación personalizado después de un tiempo
             setTimeout(() => {
                 if (deferredPrompt && !localStorage.getItem('pwa_install_dismissed')) {
-                    const installBanner = document.createElement('div');
-                    installBanner.innerHTML = `
-                        <div style="position: fixed; bottom: 20px; left: 20px; right: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 4000; text-align: center;">
-                            <p style="margin: 0 0 10px 0; font-weight: 600;">📱 ¡Instala Capibara Virtual!</p>
-                            <p style="margin: 0 0 15px 0; font-size: 0.9em; opacity: 0.9;">Accede más rápido a tu mascota virtual</p>
-                            <button onclick="installPWA()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 15px; border-radius: 8px; margin-right: 10px; cursor: pointer; font-weight: 600;">✅ Instalar</button>
-                            <button onclick="dismissInstall()" style="background: rgba(255,255,255,0.1); border: none; color: white; padding: 8px 15px; border-radius: 8px; cursor: pointer;">❌ Ahora no</button>
-                        </div>
-                    `;
-                    document.body.appendChild(installBanner);
+                    ModalSystem.show(
+                        '📱 Instalar Aplicación',
+                        '<p>¡Instala Capibara Virtual en tu dispositivo para acceder más rápido!</p>',
+                        [
+                            { text: '✅ Instalar', value: 'install' },
+                            { text: '❌ Ahora no', value: 'dismiss' }
+                        ]
+                    ).then(result => {
+                        if (result && result.value === 'install') {
+                            installPWA();
+                        } else {
+                            dismissInstall();
+                        }
+                    });
                 }
-            }, 10000); // Mostrar después de 10 segundos
+            }, 15000); // Mostrar después de 15 segundos
         });
 
         function installPWA() {
@@ -339,10 +412,6 @@
 
         function dismissInstall() {
             localStorage.setItem('pwa_install_dismissed', 'true');
-            const banner = document.querySelector('[style*="position: fixed"]');
-            if (banner) {
-                banner.remove();
-            }
         }
 
         // Detectar cuando la PWA se instala
@@ -350,6 +419,42 @@
             console.log('PWA instalada exitosamente');
             localStorage.setItem('pwa_installed', 'true');
         });
+
+        // Mejorar rendimiento en Android
+        document.addEventListener('DOMContentLoaded', function() {
+            // Optimizar animaciones para dispositivos de bajo rendimiento
+            const isLowPerformance = navigator.hardwareConcurrency <= 2 || 
+                                   /Android.*Chrome\/[0-5]/.test(navigator.userAgent);
+            
+            if (isLowPerformance) {
+                document.body.classList.add('low-performance');
+                // Reducir animaciones complejas
+                const style = document.createElement('style');
+                style.textContent = `
+                    .low-performance * {
+                        animation-duration: 0.2s !important;
+                        transition-duration: 0.2s !important;
+                    }
+                    .low-performance .game-container::before,
+                    .low-performance .pet-container::before {
+                        animation: none !important;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        });
+
+        // Función para desbloquear el logro "Por hermosa"
+        function unlockBeautifulAchievement() {
+            if (typeof checkAchievement === 'function') {
+                checkAchievement('por_hermosa');
+            }
+        }
+
+        // Desbloquear automáticamente después de 30 segundos de juego
+        setTimeout(() => {
+            unlockBeautifulAchievement();
+        }, 30000);
     </script>
 </body>
 </html>
