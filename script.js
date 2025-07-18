@@ -363,7 +363,6 @@ function initializeAchievements() {
     achievements.set('por_hermosa', new Achievement(
         'por_hermosa',
         'Por Hermosa',
-        'Tu mascota es simplemente hermosa',
         '💖',
         () => true, // Se desbloquea automáticamente
         20
