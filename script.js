@@ -1,4 +1,3 @@
-// ===== MODELOS DE DATOS =====
 
 class GameModel {
     constructor(id, name, description, minigameFunction, energyCost = 10, rewardCoins = 5) {
@@ -1803,13 +1802,21 @@ function changePetColor(color) {
 }
 
 function saveSettings() {
-    const newName = document.getElementById("petNameInput").value.trim();
-    const selectedColor = document.querySelector(".color-btn.selected").dataset.color;
-    
+    const newNameInput = document.getElementById("petNameInput");
+    const newName = newNameInput.value.trim();
+    const selectedColorElement = document.querySelector(".color-btn.selected");
+    const selectedColor = selectedColorElement ? selectedColorElement.dataset.color : petState.color;
+
     if (newName && newName.length <= 15) {
         petState.name = newName;
+    } else if (newName.length > 15) {
+        showNotificationModal("❌ Error", "El nombre de la mascota no puede tener más de 15 caracteres.");
+        return; // Detener la función si el nombre es demasiado largo
+    } else if (newName === "") {
+        showNotificationModal("❌ Error", "El nombre de la mascota no puede estar vacío.");
+        return; // Detener la función si el nombre está vacío
     }
-    
+
     petState.color = selectedColor;
     
     updateDisplay();

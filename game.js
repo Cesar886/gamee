@@ -1,4 +1,4 @@
-
+game.js
 // ===== CONFIGURACIÓN DE PHASER.JS =====
 
 let phaserGame = null;

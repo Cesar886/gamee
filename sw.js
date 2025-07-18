@@ -1,6 +1,6 @@
-const CACHE_NAME = 'capibara-virtual-v5.0';
-const STATIC_CACHE = 'capibara-static-v5.0';
-const DYNAMIC_CACHE = 'capibara-dynamic-v5.0';
+const CACHE_NAME = 'capibara-virtual-v6.0';
+const STATIC_CACHE = 'capibara-static-v6.0';
+const DYNAMIC_CACHE = 'capibara-dynamic-v6.0';
 
 const STATIC_FILES = [
     './',
