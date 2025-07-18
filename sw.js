@@ -1,12 +1,13 @@
-const CACHE_NAME = 'capibara-virtual-v6.0';
-const STATIC_CACHE = 'capibara-static-v6.0';
-const DYNAMIC_CACHE = 'capibara-dynamic-v6.0';
+const CACHE_NAME = 'capibara-virtual-v7.0';
+const STATIC_CACHE = 'capibara-static-v7.0';
+const DYNAMIC_CACHE = 'capibara-dynamic-v7.0';
 
 const STATIC_FILES = [
     './',
-    './index_final.html',
-    './style_final.css?v=5.0',
-    './script_final.js?v=5.0',
+    './index.html',
+    './style.css?v=7.0',
+    './script.js?v=7.0',
+    './game.js?v=7.0',
     './manifest.json',
     './icon-192x192.png',
     './icon-512x512.png'
