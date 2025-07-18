@@ -1,24 +1,25 @@
 {
-    "name": "Mi Capibara Virtual",
-    "short_name": "Capibara Virtual",
-    "description": "Un juego de mascota virtual tipo Tamagotchi para cuidar de tu adorable capibara",
-    "start_url": "./index.html",
-    "display": "standalone",
-    "background_color": "#667eea",
-    "theme_color": "#764ba2",
-    "orientation": "portrait-primary",
-    "icons": [
-        {
-            "src": "capibara_icon.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "capibara_icon.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ],
-    "categories": ["games", "entertainment"],
-    "lang": "es"
+  "name": "Capibara Virtual - Tamagotchi",
+  "short_name": "Capibara Virtual",
+  "description": "Cuida de tu capibara virtual en esta adorable mascota digital",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#667eea",
+  "orientation": "portrait",
+  "scope": "./",
+  "lang": "es",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiBmaWxsPSIjNjY3ZWVhIiByeD0iMzAiLz4KPGV5ZSBjeD0iNjAiIGN5PSI3MCIgcj0iMTAiIGZpbGw9IiNmZmYiLz4KPGV5ZSBjeD0iMTMyIiBjeT0iNzAiIHI9IjEwIiBmaWxsPSIjZmZmIi8+CjxjaXJjbGUgY3g9IjYwIiBjeT0iNzAiIHI9IjUiIGZpbGw9IiMwMDAiLz4KPGV5ZSBjeD0iMTMyIiBjeT0iNzAiIHI9IjUiIGZpbGw9IiMwMDAiLz4KPGVsbGlwc2UgY3g9Ijk2IiBjeT0iMTIwIiByeD0iMzAiIHJ5PSIxNSIgZmlsbD0iIzAwMCIvPgo8dGV4dCB4PSI5NiIgeT0iMTcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZmZmIiBmb250LXNpemU9IjE2IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiI+Q2FwaWJhcmE8L3RleHQ+Cjwvc3ZnPgo=",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDUxMiA1MTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSIjNjY3ZWVhIiByeD0iODAiLz4KPGV5ZSBjeD0iMTYwIiBjeT0iMTgwIiByPSIzMCIgZmlsbD0iI2ZmZiIvPgo8Y2lyY2xlIGN4PSIzNTIiIGN5PSIxODAiIHI9IjMwIiBmaWxsPSIjZmZmIi8+CjxjaXJjbGUgY3g9IjE2MCIgY3k9IjE4MCIgcj0iMTUiIGZpbGw9IiMwMDAiLz4KPGV5ZSBjeD0iMzUyIiBjeT0iMTgwIiByPSIxNSIgZmlsbD0iIzAwMCIvPgo8ZWxsaXBzZSBjeD0iMjU2IiBjeT0iMzIwIiByeD0iODAiIHJ5PSI0MCIgZmlsbD0iIzAwMCIvPgo8dGV4dCB4PSIyNTYiIHk9IjQ0MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2ZmZiIgZm9udC1zaXplPSI0OCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiPkNhcGliYXJhPC90ZXh0Pgo8L3N2Zz4K",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
 }

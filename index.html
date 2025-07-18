@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
     <title>Capibara Virtual - Mascota Digital</title>
-    <link rel="stylesheet" href="style.css?v=5.0">
+    <link rel="stylesheet" href="style.css?v=6.0">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#667eea">
     <meta name="description" content="Cuida de tu capibara virtual en esta adorable mascota digital">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Phaser.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.70.0/dist/phaser.js"></script>
     
     <!-- Lottie Web Library -->
     <script src="https://unpkg.com/lottie-web@5.7.4/build/player/lottie.min.js"></script>
@@ -51,7 +54,7 @@
                     ⚙️
                 </button>
             </div>
-            <h1>🦫 Capibara Virtual</h1>
+            <h1>Capibara Virtual</h1>
             <p class="subtitle">Tu mascota digital favorita</p>
         </header>
 
@@ -80,48 +83,34 @@
                 <div class="pet-accessories" id="petAccessories"></div>
                 <img id="petSprite" class="pet-image" src="capibara_normal.png" alt="Capibara Virtual">
                 <h2 id="petName" class="pet-name">Capibara</h2>
-                <div id="petMood" class="pet-mood">😊</div>
             </div>
         </div>
 
-        <!-- Estadísticas -->
-        <div class="stats-container">
-            <div class="stat">
-                <span class="stat-label">🍎 Hambre:</span>
-                <div class="stat-bar">
-                    <div id="hungerBar" class="stat-fill" style="width: 100%"></div>
-                </div>
-                <span id="hungerValue" class="stat-value">100%</span>
-            </div>
-            <div class="stat">
-                <span class="stat-label">😊 Felicidad:</span>
-                <div class="stat-bar">
-                    <div id="happinessBar" class="stat-fill" style="width: 100%"></div>
-                </div>
-                <span id="happinessValue" class="stat-value">100%</span>
-            </div>
-            <div class="stat">
-                <span class="stat-label">❤️ Salud:</span>
-                <div class="stat-bar">
-                    <div id="healthBar" class="stat-fill" style="width: 100%"></div>
-                </div>
-                <span id="healthValue" class="stat-value">100%</span>
-            </div>
-            <div class="stat">
-                <span class="stat-label">⚡ Energía:</span>
-                <div class="stat-bar">
-                    <div id="energyBar" class="stat-fill" style="width: 100%"></div>
-                </div>
-                <span id="energyValue" class="stat-value">100%</span>
-            </div>
-            <div class="stat">
-                <span class="stat-label">🧼 Limpieza:</span>
-                <div class="stat-bar">
-                    <div id="cleanlinessBar" class="stat-fill" style="width: 100%"></div>
-                </div>
-                <span id="cleanlinessValue" class="stat-value">100%</span>
-            </div>
-        </div>
+<!-- Estadísticas Visuales Tiernas -->
+<div class="stats-visual-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; text-align: center; font-size: 14px; margin: 10px 0;">
+    <div class="stat-visual" style="flex: 1 1 100px;">
+        <div>🍓 <strong>Hambre</strong></div>
+        <div>💗💗💗💗💗</div>
+    </div>
+    <div class="stat-visual" style="flex: 1 1 100px;">
+        <div>🎈 <strong>Felicidad</strong></div>
+        <div>💛💛💛💛💛</div>
+    </div>
+    <div class="stat-visual" style="flex: 1 1 100px;">
+        <div>🧸 <strong>Salud</strong></div>
+        <div>💖💖💖💖💖</div>
+    </div>
+    <div class="stat-visual" style="flex: 1 1 100px;">
+        <div>🌟 <strong>Energía</strong></div>
+        <div>💜💜💜💜💜</div>
+    </div>
+    <div class="stat-visual" style="flex: 1 1 100px;">
+        <div>🫧 <strong>Limpieza</strong></div>
+        <div>💙💙💙💙💙</div>
+    </div>
+</div>
+
+
 
         <!-- Acciones dinámicas -->
         <div id="actionsContainer" class="actions-container">
@@ -173,13 +162,13 @@
                 </div>
             </div>
             <div class="modal-buttons">
-                <button onclick="saveSettings()">💾 Guardar</button>
-                <button onclick="closeSettings()">❌ Cancelar</button>
+                <button onclick="saveSettings()">Guardar</button>
+                <button onclick="closeSettings()">Cancelar</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal de Tienda -->
+    <!-- Modal de Tienda Mejorada -->
     <div id="shopModal" class="modal-overlay">
         <div class="modal-content shop-content">
             <div class="shop-header">
@@ -201,23 +190,58 @@
             <div id="shopItems" class="shop-items">
                 <!-- Los items se generan dinámicamente -->
             </div>
-            <button class="close-shop-btn" onclick="closeShop()">🚪 Cerrar Tienda</button>
+            <div class="shop-actions">
+                <button class="inventory-btn" onclick="showInventoryModal()">🎒 Ver Inventario</button>
+                <button class="close-shop-btn" onclick="closeShop()">🚪 Cerrar Tienda</button>
+            </div>
         </div>
     </div>
 
-    <!-- Overlay del Juego de Plataformas -->
+    <!-- Modal de Inventario -->
+    <div id="inventoryModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>🎒 Inventario</h3>
+            <div class="inventory-tabs">
+                <button class="inventory-tab active" data-tab="food" onclick="changeInventoryTab('food')">🍎 Comida</button>
+                <button class="inventory-tab" data-tab="accessories" onclick="changeInventoryTab('accessories')">👒 Accesorios</button>
+                <button class="inventory-tab" data-tab="decorations" onclick="changeInventoryTab('decorations')">🎨 Decoración</button>
+                <button class="inventory-tab" data-tab="toys" onclick="changeInventoryTab('toys')">🧸 Juguetes</button>
+            </div>
+            <div id="inventoryItems" class="inventory-items">
+                <!-- Los items del inventario se generan dinámicamente -->
+            </div>
+            <div class="modal-buttons">
+                <button onclick="closeInventory()">❌ Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Logros -->
+    <div id="achievementsModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>🏆 Logros</h3>
+            <div id="achievementsList" class="achievements-list">
+                <!-- Los logros se generan dinámicamente -->
+            </div>
+            <div class="modal-buttons">
+                <button onclick="closeAchievements()">❌ Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay del Juego de Plataformas con Phaser -->
     <div id="platformGameOverlay" class="game-overlay">
         <div class="platform-game-container">
             <div class="game-score">Puntuación: <span id="gameScore">0</span></div>
-            <canvas id="gameCanvas" width="300" height="500"></canvas>
+            <div id="phaserGameContainer"></div>
             
             <!-- Pantalla de inicio -->
             <div id="gameStartScreen" class="game-start-screen">
                 <h2>🎮 Capibara Jump</h2>
                 <p>¡Ayuda a tu capibara a saltar lo más alto posible!</p>
                 <p>📱 Toca los lados para moverte<br>🖱️ Usa las flechas o espacio para saltar</p>
-                <button onclick="startGame()">🚀 Comenzar</button>
-                <button onclick="closeGame()">❌ Cerrar</button>
+                <button onclick="startPhaserGame()">🚀 Comenzar</button>
+                <button onclick="closePhaserGame()">❌ Cerrar</button>
             </div>
             
             <!-- Pantalla de fin de juego -->
@@ -225,20 +249,48 @@
                 <h2>🏁 ¡Juego Terminado!</h2>
                 <p>Puntuación: <span id="finalScore">0</span></p>
                 <p>Monedas ganadas: <span id="coinsEarned">0</span></p>
-                <button onclick="restartGame()">🔄 Jugar de nuevo</button>
-                <button onclick="closeGame()">🚪 Cerrar</button>
+                <button onclick="restartPhaserGame()">🔄 Jugar de nuevo</button>
+                <button onclick="closePhaserGame()">🚪 Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación -->
+    <div id="confirmModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="confirmTitle">Confirmar</h3>
+            <div class="modal-body">
+                <p id="confirmMessage">¿Estás seguro?</p>
+            </div>
+            <div class="modal-buttons">
+                <button id="confirmYes" onclick="confirmAction(true)">✅ Sí</button>
+                <button id="confirmNo" onclick="confirmAction(false)">❌ No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Notificación -->
+    <div id="notificationModal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="notificationTitle">Información</h3>
+            <div class="modal-body">
+                <p id="notificationMessage">Mensaje</p>
+            </div>
+            <div class="modal-buttons">
+                <button onclick="closeNotification()">✅ Entendido</button>
             </div>
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="script.js?v=5.0"></script>
+    <script src="game.js?v=6.0"></script>
+    <script src="script.js?v=6.0"></script>
     
     <!-- Service Worker Registration -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js?v=5.0')
+                navigator.serviceWorker.register('sw.js?v=6.0')
                     .then(function(registration) {
                         console.log('SW registrado con éxito:', registration.scope);
                         
@@ -253,18 +305,11 @@
                             newWorker.addEventListener('statechange', () => {
                                 if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                                     // Nueva versión disponible - usar modal en lugar de confirm
-                                    ModalSystem.show(
+                                    showConfirmModal(
                                         '🔄 Actualización Disponible',
-                                        '<p>¡Nueva versión disponible! ¿Quieres actualizar?</p>',
-                                        [
-                                            { text: '✅ Actualizar', value: 'update' },
-                                            { text: '❌ Después', value: 'later' }
-                                        ]
-                                    ).then(result => {
-                                        if (result && result.value === 'update') {
-                                            window.location.reload();
-                                        }
-                                    });
+                                        '¡Nueva versión disponible! ¿Quieres actualizar?',
+                                        () => window.location.reload()
+                                    );
                                 }
                             });
                         });
@@ -300,10 +345,11 @@
                 
                 // Permitir scroll solo en elementos específicos
                 if (!element.closest('.shop-items') && 
+                    !element.closest('.inventory-items') &&
+                    !element.closest('.achievements-list') &&
                     !element.closest('.game-container') && 
                     !element.closest('input') && 
                     !element.closest('textarea') &&
-                    !element.closest('.achievements-list') &&
                     !element.closest('.modal-content')) {
                     e.preventDefault();
                 }
@@ -318,10 +364,11 @@
                 
                 // Permitir scroll solo en elementos específicos
                 if (!element.closest('.shop-items') && 
+                    !element.closest('.inventory-items') &&
+                    !element.closest('.achievements-list') &&
                     !element.closest('.game-container') && 
                     !element.closest('input') && 
                     !element.closest('textarea') &&
-                    !element.closest('.achievements-list') &&
                     !element.closest('.modal-content')) {
                     e.preventDefault();
                 }
@@ -379,20 +426,12 @@
             // Mostrar botón de instalación personalizado después de un tiempo
             setTimeout(() => {
                 if (deferredPrompt && !localStorage.getItem('pwa_install_dismissed')) {
-                    ModalSystem.show(
+                    showConfirmModal(
                         '📱 Instalar Aplicación',
-                        '<p>¡Instala Capibara Virtual en tu dispositivo para acceder más rápido!</p>',
-                        [
-                            { text: '✅ Instalar', value: 'install' },
-                            { text: '❌ Ahora no', value: 'dismiss' }
-                        ]
-                    ).then(result => {
-                        if (result && result.value === 'install') {
-                            installPWA();
-                        } else {
-                            dismissInstall();
-                        }
-                    });
+                        '¡Instala Capibara Virtual en tu dispositivo para acceder más rápido!',
+                        installPWA,
+                        dismissInstall
+                    );
                 }
             }, 15000); // Mostrar después de 15 segundos
         });
